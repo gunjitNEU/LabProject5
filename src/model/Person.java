@@ -11,12 +11,10 @@ import java.time.LocalDate;
  * @author gunjitarora
  */
 public class Person {
-    
-    static int employeeCount = 0;
 
     String firstName;
     String lastName;
-    String community;
+
     public enum Gender {
         MALE, FEMALE, OTHER;
     }
@@ -24,14 +22,6 @@ public class Person {
     LocalDate birthDate;
     String phone;
     String email;
-
-    public static int getEmployeeCount() {
-        return employeeCount;
-    }
-
-    public static void setEmployeeCount(int employeeCount) {
-        Person.employeeCount = employeeCount;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -47,14 +37,6 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getCommunity() {
-        return community;
-    }
-
-    public void setCommunity(String community) {
-        this.community = community;
     }
 
     public Gender getGender() {
@@ -88,5 +70,5 @@ public class Person {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
 }

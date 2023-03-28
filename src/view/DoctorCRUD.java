@@ -8,12 +8,12 @@ package view;
  *
  * @author gunjitarora
  */
-public class DcotorCRUD extends javax.swing.JPanel {
+public class DoctorCRUD extends javax.swing.JPanel {
 
     /**
      * Creates new form DcotorCRUD
      */
-    public DcotorCRUD() {
+    public DoctorCRUD() {
         initComponents();
     }
 

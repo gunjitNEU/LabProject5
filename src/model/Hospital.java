@@ -6,20 +6,13 @@ package model;
 
 /**
  *
- * @author gunjitarora
+ * @author imkus
  */
-public class Doctor extends Person {
+public class Hospital {
 
-    int doctorId;
     int hospitalId;
-
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
+    String name;
+    int communityId;
 
     public int getHospitalId() {
         return hospitalId;
@@ -27,6 +20,22 @@ public class Doctor extends Person {
 
     public void setHospitalId(int hospitalId) {
         this.hospitalId = hospitalId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(int communityId) {
+        this.communityId = communityId;
     }
 
 }
