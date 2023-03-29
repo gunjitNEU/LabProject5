@@ -20,6 +20,9 @@ public class MainJFrame extends javax.swing.JFrame {
 //        this.setUndecorated(true);
         this.setVisible(true);
         initComponents();
+//        jTabbedPane1.add("Doctor", new DoctorCRUD());
+//        jTabbedPane1.add("Patient", new PatientCRUD());
+//        jTabbedPane1.add("Community", new CommunityCRUD());
 
     }
 
@@ -37,7 +40,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,8 +88,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jSplitPane1.setTopComponent(jPanel1);
 
-        jPanel2.setLayout(new java.awt.CardLayout());
-        jSplitPane1.setRightComponent(jPanel2);
+        jTabbedPane1.setToolTipText("");
+        jSplitPane1.setRightComponent(jTabbedPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,7 +99,7 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jSplitPane1)
         );
 
         pack();
@@ -107,7 +110,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            jSplitPane1.setBottomComponent(new DoctorCRUD());
+        jSplitPane1.setBottomComponent(new DoctorCRUD());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -152,7 +155,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
