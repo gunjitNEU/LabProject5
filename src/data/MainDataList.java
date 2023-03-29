@@ -5,6 +5,7 @@
 package data;
 
 import java.util.ArrayList;
+import model.Admin;
 import model.Community;
 import model.Doctor;
 import model.Hospital;
@@ -24,5 +25,6 @@ public class MainDataList {
     public static ArrayList<Hospital> hospitalList = new ArrayList<>();
     public static ArrayList<Doctor> doctorList = new ArrayList<>();
     public static ArrayList<Patient> patientList = new ArrayList<>();
+    public static ArrayList<Admin> adminList = new ArrayList<>();
 
 }

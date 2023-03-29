@@ -4,6 +4,8 @@
  */
 package view;
 
+import model.table.PatientModel;
+
 /**
  *
  * @author gunjitarora
@@ -69,7 +71,7 @@ public class PatientCRUD extends javax.swing.JPanel {
 
         jTextField1.setText("jTextField1");
 
-        jTable1.setModel(new model.table.DoctorModel());
+        jTable1.setModel(new PatientModel());
         jScrollPane1.setViewportView(jTable1);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));

@@ -4,6 +4,8 @@
  */
 package view;
 
+import model.table.DoctorModel;
+
 /**
  *
  * @author gunjitarora
@@ -72,7 +74,7 @@ public class DoctorCRUD extends javax.swing.JPanel {
 
         jButton3.setText("View");
 
-        jTable1.setModel(new model.table.DoctorModel());
+        jTable1.setModel(new DoctorModel());
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

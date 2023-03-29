@@ -4,7 +4,9 @@
  */
 package view;
 
+import data.MainDataList;
 import javax.swing.JFrame;
+import model.Admin;
 
 /**
  *
@@ -20,9 +22,9 @@ public class MainJFrame extends javax.swing.JFrame {
 //        this.setUndecorated(true);
         this.setVisible(true);
         initComponents();
-//        jTabbedPane1.add("Doctor", new DoctorCRUD());
-//        jTabbedPane1.add("Patient", new PatientCRUD());
-//        jTabbedPane1.add("Community", new CommunityCRUD());
+        MainDataList.adminList.add(new Admin("admin@gmail.com", "pass123", Admin.Role.SYSTEM_ADMIN));
+        MainDataList.adminList.add(new Admin("comm_admin@gmail.com", "pass123", Admin.Role.COMMUNITY_ADMIN));
+        MainDataList.adminList.add(new Admin("hosp_admin@gmail.com", "pass123", Admin.Role.HOSPITAL_ADMIN));
 
     }
 
@@ -110,7 +112,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jSplitPane1.setBottomComponent(new DoctorCRUD());
+        jSplitPane1.setBottomComponent(new AdminLogin(jSplitPane1));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
