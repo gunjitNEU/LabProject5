@@ -4,8 +4,6 @@
  */
 package model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author gunjitarora
@@ -19,7 +17,6 @@ public class Person {
         MALE, FEMALE, OTHER;
     }
     Gender gender;
-    LocalDate birthDate;
     String phone;
     String email;
 
@@ -45,14 +42,6 @@ public class Person {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getPhone() {

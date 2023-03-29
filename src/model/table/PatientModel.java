@@ -4,32 +4,32 @@
  */
 package model.table;
 
-import javax.swing.table.AbstractTableModel;
-import model.Community;
 import data.MainDataList;
+import javax.swing.table.AbstractTableModel;
+import model.Patient;
 
 /**
  *
  * @author imkus
  */
-public class CommunityModel extends AbstractTableModel {
+public class PatientModel extends AbstractTableModel {
 
     private final String[] columnNames
             = {
-                "Community ID",
-                "Area",
-                "District",
-                "City",
-                "Pin Code"
+                "Patient ID",
+                "First Name",
+                "Last Name",
+                "Email",
+                "Phone"
             };
 
-    public CommunityModel() {
+    public PatientModel() {
 
     }
 
     @Override
     public int getRowCount() {
-        return MainDataList.communityList.size();
+        return MainDataList.patientList.size();
     }
 
     @Override
@@ -49,18 +49,19 @@ public class CommunityModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Community community = MainDataList.communityList.get(rowIndex);
+        Patient patient = MainDataList.patientList.get(rowIndex);
+
         return switch (columnIndex) {
             case 0 ->
-                community.getCommunityId();
+                patient.getPatientId();
             case 1 ->
-                community.getArea();
+                patient.getFirstName();
             case 2 ->
-                community.getDistrict();
+                patient.getLastName();
             case 3 ->
-                community.getCity();
+                patient.getEmail();
             case 4 ->
-                community.getPinCode();
+                patient.getPhone();
             default ->
                 null;
         };

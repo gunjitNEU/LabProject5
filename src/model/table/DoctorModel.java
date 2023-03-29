@@ -4,32 +4,34 @@
  */
 package model.table;
 
-import javax.swing.table.AbstractTableModel;
-import model.Community;
 import data.MainDataList;
+import javax.swing.table.AbstractTableModel;
+import model.Doctor;
+import model.Hospital;
 
 /**
  *
  * @author imkus
  */
-public class CommunityModel extends AbstractTableModel {
+public class DoctorModel extends AbstractTableModel {
 
     private final String[] columnNames
             = {
-                "Community ID",
-                "Area",
-                "District",
-                "City",
-                "Pin Code"
+                "Doctor ID",
+                "First Name",
+                "Last Name",
+                "Email",
+                "Phone",
+                "Hospital"
             };
 
-    public CommunityModel() {
+    public DoctorModel() {
 
     }
 
     @Override
     public int getRowCount() {
-        return MainDataList.communityList.size();
+        return MainDataList.doctorList.size();
     }
 
     @Override
@@ -49,18 +51,22 @@ public class CommunityModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Community community = MainDataList.communityList.get(rowIndex);
+        Doctor doctor = MainDataList.doctorList.get(rowIndex);
+        Hospital hospital = MainDataList.hospitalList.stream().filter((h) -> h.getHospitalId() == doctor.getHospitalId()).findAny().get();
+
         return switch (columnIndex) {
             case 0 ->
-                community.getCommunityId();
+                doctor.getDoctorId();
             case 1 ->
-                community.getArea();
+                doctor.getFirstName();
             case 2 ->
-                community.getDistrict();
+                doctor.getLastName();
             case 3 ->
-                community.getCity();
+                doctor.getEmail();
             case 4 ->
-                community.getPinCode();
+                doctor.getPhone();
+            case 5 ->
+                hospital.getName();
             default ->
                 null;
         };

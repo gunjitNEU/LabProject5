@@ -12,6 +12,7 @@ public class Patient extends Person {
 
     int patientId;
     int communityId;
+    int doctorId;
 
     public int getPatientId() {
         return patientId;
@@ -28,5 +29,15 @@ public class Patient extends Person {
     public void setCommunityId(int communityId) {
         this.communityId = communityId;
     }
+
+    public int getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
+    }
+    
+    
 
 }
