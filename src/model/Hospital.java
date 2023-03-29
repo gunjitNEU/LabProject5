@@ -10,9 +10,21 @@ package model;
  */
 public class Hospital {
 
+    public static int ID = 1001;
+
     int hospitalId;
     String name;
     int communityId;
+
+    public Hospital(int hospitalId, String name, int communityId) {
+        this.hospitalId = hospitalId;
+        this.name = name;
+        this.communityId = communityId;
+    }
+
+    public Hospital() {
+
+    }
 
     public int getHospitalId() {
         return hospitalId;
@@ -36,6 +48,11 @@ public class Hospital {
 
     public void setCommunityId(int communityId) {
         this.communityId = communityId;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

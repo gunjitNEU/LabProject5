@@ -10,6 +10,8 @@ package model;
  */
 public class Patient extends Person {
 
+    public static int ID = 1001;
+
     int patientId;
     int communityId;
     int doctorId;
@@ -37,7 +39,5 @@ public class Patient extends Person {
     public void setDoctorId(int doctorId) {
         this.doctorId = doctorId;
     }
-    
-    
 
 }

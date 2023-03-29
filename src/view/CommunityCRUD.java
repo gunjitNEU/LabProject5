@@ -4,7 +4,9 @@
  */
 package view;
 
+import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import model.Community;
 import model.table.CommunityModel;
 
@@ -17,10 +19,17 @@ public class CommunityCRUD extends javax.swing.JPanel {
     /**
      * Creates new form CommunityCRUD
      */
+    CommunityModel cm;
+
     public CommunityCRUD() {
         initComponents();
+        cm = new CommunityModel();
+        communityTable.setModel(cm);
         cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
-        
+
+        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+
     }
 
     /**
@@ -40,7 +49,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        areaField = new javax.swing.JTextField();
         districtField = new javax.swing.JTextField();
         pinCodeField = new javax.swing.JTextField();
         cityComboBox = new javax.swing.JComboBox<>();
@@ -52,7 +61,15 @@ public class CommunityCRUD extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         addButton = new javax.swing.JButton();
 
-        communityTable.setModel(new CommunityModel());
+        communityTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        communityTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(communityTable);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -68,9 +85,15 @@ public class CommunityCRUD extends javax.swing.JPanel {
 
         jLabel6.setText("Community Id:");
 
-        communityIdField.setEditable(false);
+        communityIdField.setEnabled(false);
 
         updateButton.setText("Update");
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +103,11 @@ public class CommunityCRUD extends javax.swing.JPanel {
         });
 
         viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear Selection");
         clearButton.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +146,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
                                     .addComponent(cityComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 94, Short.MAX_VALUE)
                                     .addComponent(pinCodeField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(districtField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1)
+                                    .addComponent(areaField)
                                     .addComponent(communityIdField)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +177,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(areaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -177,19 +205,73 @@ public class CommunityCRUD extends javax.swing.JPanel {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
+        if (communityTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        MainDataList.communityList.remove(communityTable.getSelectedRow());
+        cm.fireTableDataChanged();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         // TODO add your handling code here:
+        cityComboBox.setSelectedIndex(0);
+        areaField.setText("");
+        districtField.setText("");
+        pinCodeField.setText("");
+        communityIdField.setText("");
+        addButton.setEnabled(true);
+        updateButton.setEnabled(false);
+
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
+        Community c = new Community();
+        c.setArea(areaField.getText());
+        c.setCity((Community.City) cityComboBox.getSelectedItem());
+        c.setDistrict(districtField.getText());
+        c.setPinCode(pinCodeField.getText());
+        c.setCommunityId(Community.ID++);
+        MainDataList.communityList.add(c);
+        clearButton.doClick();
+        cm.fireTableDataChanged();
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        // TODO add your handling code here:
+
+        if (communityTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Community community = MainDataList.communityList.get(communityTable.getSelectedRow());
+        cityComboBox.setSelectedItem(community.getCity());
+        areaField.setText(community.getArea());
+        districtField.setText(community.getDistrict());
+        pinCodeField.setText(community.getPinCode());
+        communityIdField.setText(String.valueOf(community.getCommunityId()));
+        addButton.setEnabled(false);
+        updateButton.setEnabled(true);
+
+    }//GEN-LAST:event_viewButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+        Community c = MainDataList.communityList.get(communityTable.getSelectedRow());
+        c.setArea(areaField.getText());
+        c.setCity((Community.City) cityComboBox.getSelectedItem());
+        c.setDistrict(districtField.getText());
+        c.setPinCode(pinCodeField.getText());
+        MainDataList.communityList.set(communityTable.getSelectedRow(), c);
+        clearButton.doClick();
+        cm.fireTableDataChanged();
+    }//GEN-LAST:event_updateButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JTextField areaField;
     private javax.swing.JComboBox<Community.City> cityComboBox;
     private javax.swing.JButton clearButton;
     private javax.swing.JTextField communityIdField;
@@ -204,7 +286,6 @@ public class CommunityCRUD extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField pinCodeField;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton viewButton;

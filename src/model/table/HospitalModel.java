@@ -27,7 +27,7 @@ public class HospitalModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return MainDataList.communityList.size();
+        return MainDataList.hospitalList.size();
     }
 
     @Override

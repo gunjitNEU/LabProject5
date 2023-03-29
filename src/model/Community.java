@@ -10,13 +10,27 @@ package model;
  */
 public class Community {
 
+    public static int ID = 1001;
+
+    public Community(int communityId, String area, String district, String pinCode, City city) {
+        this.communityId = communityId;
+        this.area = area;
+        this.district = district;
+        this.pinCode = pinCode;
+        this.city = city;
+    }
+
+    public Community() {
+
+    }
+
     int communityId;
     String area;
     String district;
     String pinCode;
 
     public enum City {
-        Toronto, Etobicoke, OTHER;
+        Toronto, Etobicoke, Ottawa;
     }
     City city;
 
@@ -58,6 +72,11 @@ public class Community {
 
     public void setCommunityId(int communityId) {
         this.communityId = communityId;
+    }
+
+    @Override
+    public String toString() {
+        return area + ',' + district + ',' + city.toString();
     }
 
 }
