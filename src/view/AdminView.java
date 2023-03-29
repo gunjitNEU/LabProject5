@@ -24,7 +24,7 @@ public class AdminView extends javax.swing.JPanel {
             case SYSTEM_ADMIN -> {
                 jTabbedPane1.add("Patient", new PatientCRUD());
                 jTabbedPane1.add("Doctor", new DoctorCRUD());
-                jTabbedPane1.add("Patient", new PatientCRUD());
+                jTabbedPane1.add("Hospital", new HospitalCRUD());
                 jTabbedPane1.add("Community", new CommunityCRUD());
             }
             case COMMUNITY_ADMIN ->
