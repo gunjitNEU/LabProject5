@@ -19,13 +19,11 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     public MainJFrame() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        this.setUndecorated(true);
         this.setVisible(true);
         initComponents();
         MainDataList.adminList.add(new Admin("admin@gmail.com", "pass123", Admin.Role.SYSTEM_ADMIN));
         MainDataList.adminList.add(new Admin("comm_admin@gmail.com", "pass123", Admin.Role.COMMUNITY_ADMIN));
         MainDataList.adminList.add(new Admin("hosp_admin@gmail.com", "pass123", Admin.Role.HOSPITAL_ADMIN));
-//        jSplitPane1.setBottomComponent(new PatientCRUD());
     }
 
     /**
@@ -160,6 +158,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
+        jSplitPane1.setBottomComponent(new PatientDirectory());
 
     }//GEN-LAST:event_patientButtonActionPerformed
 
