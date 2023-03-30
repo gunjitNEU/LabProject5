@@ -4,6 +4,13 @@
  */
 package view;
 
+import data.MainDataList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import model.table.HospitalModel;
+import model.Community;
+import model.Hospital;
+
 /**
  *
  * @author gunjitarora
@@ -13,8 +20,17 @@ public class HospitalCRUD extends javax.swing.JPanel {
     /**
      * Creates new form HospitalCRUD
      */
+    HospitalModel hm;
+
     public HospitalCRUD() {
         initComponents();
+        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+        hm = new HospitalModel();
+        hospitalTable.setModel(hm);
+        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
+        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
+        hm.fireTableDataChanged();
     }
 
     /**
@@ -26,19 +42,221 @@ public class HospitalCRUD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        hospitalTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
+        hospitalIdField = new javax.swing.JTextField();
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        viewButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        addButton = new javax.swing.JButton();
+        communityComboBox = new javax.swing.JComboBox<>();
+
+        hospitalTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        hospitalTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(hospitalTable);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Hospital List");
+
+        jLabel2.setText("Name:");
+
+        jLabel3.setText("Community:");
+
+        jLabel6.setText("Hospital Id:");
+
+        hospitalIdField.setEditable(false);
+        hospitalIdField.setEnabled(false);
+
+        updateButton.setText("Update");
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewButtonActionPerformed(evt);
+            }
+        });
+
+        clearButton.setText("Clear Selection");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(updateButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1)
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameField)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(hospitalIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(communityComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addComponent(jLabel1))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(viewButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(clearButton)
+                        .addGap(100, 100, 100)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(communityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(hospitalIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(updateButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        if (hospitalTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select hospital from list", "No community selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        MainDataList.hospitalList.remove(hospitalTable.getSelectedRow());
+        hm.fireTableDataChanged();
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // TODO add your handling code here:
+        nameField.setText("");
+        hospitalIdField.setText("");
+        communityComboBox.setSelectedIndex(0);
+        addButton.setEnabled(true);
+        updateButton.setEnabled(false);
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here
+        Hospital h = new Hospital();
+        h.setName(nameField.getText());
+        h.setHospitalId(Hospital.ID++);
+        h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
+        MainDataList.hospitalList.add(h);
+        clearButton.doClick();
+        hm.fireTableDataChanged();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        // TODO add your handling code here:
+        if (hospitalTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select hospital from list", "No hospital selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Hospital hospital = MainDataList.hospitalList.get(hospitalTable.getSelectedRow());
+        nameField.setText(hospital.getName());
+        Community community = MainDataList.communityList.stream().filter((c) -> c.getCommunityId() == hospital.getCommunityId()).findAny().get();
+        communityComboBox.setSelectedItem(community);
+        hospitalIdField.setText(String.valueOf(hospital.getHospitalId()));
+        addButton.setEnabled(false);
+        updateButton.setEnabled(true);
+    }//GEN-LAST:event_viewButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+        Hospital h = MainDataList.hospitalList.get(hospitalTable.getSelectedRow());
+        h.setName(nameField.getText());
+        h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
+        MainDataList.hospitalList.set(hospitalTable.getSelectedRow(), h);
+        clearButton.doClick();
+        hm.fireTableDataChanged();
+    }//GEN-LAST:event_updateButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JComboBox<Community> communityComboBox;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField hospitalIdField;
+    private javax.swing.JTable hospitalTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
 }

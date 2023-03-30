@@ -8,39 +8,34 @@ import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Community;
-import model.Person;
 import model.Doctor;
-import model.Hospital;
-import model.Patient;
 import model.table.DoctorModel;
-import model.table.PatientModel;
+import model.Person;
+import model.Hospital;
 
 /**
  *
  * @author gunjitarora
  */
-public class PatientCRUD extends javax.swing.JPanel {
+public class DoctorCRUD extends javax.swing.JPanel {
 
     /**
-     * Creates new form PatientCRUD
+     * Creates new form DcotorCRUD
      */
-    PatientModel pm;
+    DoctorModel dm;
 
-    public PatientCRUD() {
+    public DoctorCRUD() {
         initComponents();
         MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
         MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
         MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
         MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
-        MainDataList.doctorList.add(new Doctor(Doctor.ID++, "aaa", "bbb", Person.Gender.MALE, "abc", "abc", 1001));
-        MainDataList.doctorList.add(new Doctor(Doctor.ID++, "cc", "dd", Person.Gender.MALE, "abc", "abc", 1002));
-
-        pm = new PatientModel();
-        patientTable.setModel(pm);
+        dm = new DoctorModel();
+        doctorTable.setModel(dm);
         genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
-        doctorComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.doctorList.toArray(new Doctor[0])));
+        hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.toArray(new Hospital[0])));
 
-        pm.fireTableDataChanged();
+        dm.fireTableDataChanged();
     }
 
     /**
@@ -52,67 +47,29 @@ public class PatientCRUD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addButton = new javax.swing.JButton();
         lastNameField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         phoneField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        viewButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        doctorTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         clearButton = new javax.swing.JButton();
         firstNameField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        patientTable = new javax.swing.JTable();
         genderComboBox = new javax.swing.JComboBox<>();
         emailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        doctorComboBox = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        hospitalComboBox = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        addButton = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        patientIdField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        deleteButton = new javax.swing.JButton();
-        viewButton = new javax.swing.JButton();
-
-        jLabel5.setText("Email:");
-
-        jLabel6.setText("Phone:");
-
-        updateButton.setText("Update");
-        updateButton.setEnabled(false);
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
-            }
-        });
-
-        clearButton.setText("Clear Selection");
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearButtonActionPerformed(evt);
-            }
-        });
-
-        patientTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        patientTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(patientTable);
-
-        jLabel7.setText("Doctor:");
-
-        jLabel2.setText("First Name");
-
-        jLabel3.setText("Last Name:");
-
-        jLabel8.setText("Patient Id:");
+        doctorIdField = new javax.swing.JTextField();
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,13 +78,13 @@ public class PatientCRUD extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("Gender");
-
-        patientIdField.setEditable(false);
-        patientIdField.setEnabled(false);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Patient List");
+        updateButton.setText("Update");
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +99,44 @@ public class PatientCRUD extends javax.swing.JPanel {
                 viewButtonActionPerformed(evt);
             }
         });
+
+        doctorTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        doctorTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(doctorTable);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Doctor List");
+
+        jLabel2.setText("First Name");
+
+        jLabel3.setText("Last Name:");
+
+        jLabel4.setText("Gender");
+
+        jLabel5.setText("Email:");
+
+        jLabel6.setText("Phone:");
+
+        clearButton.setText("Clear Selection");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Hospital:");
+
+        jLabel8.setText("Doctor Id:");
+
+        doctorIdField.setEditable(false);
+        doctorIdField.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -173,8 +168,8 @@ public class PatientCRUD extends javax.swing.JPanel {
                                     .addComponent(phoneField)
                                     .addComponent(genderComboBox, 0, 106, Short.MAX_VALUE)
                                     .addComponent(emailField)
-                                    .addComponent(doctorComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(patientIdField)))
+                                    .addComponent(hospitalComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(doctorIdField)))
                             .addComponent(updateButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator1)
@@ -220,19 +215,44 @@ public class PatientCRUD extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(doctorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(hospitalComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(patientIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(doctorIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(updateButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(addButton))
                     .addComponent(jScrollPane1))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        Doctor d = new Doctor();
+        d.setFirstName(firstNameField.getText());
+        d.setLastName(lastNameField.getText());
+        d.setGender((Person.Gender) genderComboBox.getSelectedItem());
+        d.setEmail(emailField.getText());
+        d.setPhone(phoneField.getText());
+        d.setHospitalId(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId());
+        d.setDoctorId(Doctor.ID++);
+        MainDataList.doctorList.add(d);
+        clearButton.doClick();
+        dm.fireTableDataChanged();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+        if (doctorTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        MainDataList.hospitalList.remove(doctorTable.getSelectedRow());
+        dm.fireTableDataChanged();
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         // TODO add your handling code here:
@@ -240,70 +260,45 @@ public class PatientCRUD extends javax.swing.JPanel {
         lastNameField.setText("");
         emailField.setText("");
         phoneField.setText("");
-        patientIdField.setText("");
-        doctorComboBox.setSelectedIndex(0);
+        doctorIdField.setText("");
+        hospitalComboBox.setSelectedIndex(0);
         genderComboBox.setSelectedIndex(0);
         addButton.setEnabled(true);
         updateButton.setEnabled(false);
 
     }//GEN-LAST:event_clearButtonActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         // TODO add your handling code here:
-        Patient p = new Patient();
-        p.setFirstName(firstNameField.getText());
-        p.setLastName(lastNameField.getText());
-        p.setGender((Person.Gender) genderComboBox.getSelectedItem());
-        p.setEmail(emailField.getText());
-        p.setPhone(phoneField.getText());
-        p.setDoctorId(((Doctor) doctorComboBox.getSelectedItem()).getDoctorId());
-        p.setPatientId(Patient.ID++);
-        MainDataList.patientList.add(p);
-        clearButton.doClick();
-        pm.fireTableDataChanged();
-    }//GEN-LAST:event_addButtonActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-        if (patientTable.getSelectedRow() == -1) {
+        if (doctorTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.patientList.remove(patientTable.getSelectedRow());
-        pm.fireTableDataChanged();
-    }//GEN-LAST:event_deleteButtonActionPerformed
-
-    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
-        // TODO add your handling code here:
-        if (patientTable.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Please select patient from list", "No patient selected", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
-        firstNameField.setText(p.getFirstName());
-        lastNameField.setText(p.getLastName());
-        emailField.setText(p.getEmail());
-        phoneField.setText(p.getPhone());
-        patientIdField.setText(String.valueOf(p.getPatientId()));
-        Doctor doctor = MainDataList.doctorList.stream().filter((d) -> d.getDoctorId() == p.getDoctorId()).findAny().get();
-        doctorComboBox.setSelectedItem(doctor);
-        genderComboBox.setSelectedItem(p.getGender());
+        Doctor d = MainDataList.doctorList.get(doctorTable.getSelectedRow());
+        firstNameField.setText(d.getFirstName());
+        lastNameField.setText(d.getLastName());
+        emailField.setText(d.getEmail());
+        phoneField.setText(d.getPhone());
+        doctorIdField.setText(String.valueOf(d.getDoctorId()));
+        Hospital hospital = MainDataList.hospitalList.stream().filter((h) -> h.getHospitalId() == d.getHospitalId()).findAny().get();
+        hospitalComboBox.setSelectedItem(hospital);
+        genderComboBox.setSelectedItem(d.getGender());
         addButton.setEnabled(false);
         updateButton.setEnabled(true);
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
-        p.setFirstName(firstNameField.getText());
-        p.setLastName(lastNameField.getText());
-        p.setGender((Person.Gender) genderComboBox.getSelectedItem());
-        p.setEmail(emailField.getText());
-        p.setPhone(phoneField.getText());
-        p.setDoctorId(((Doctor) doctorComboBox.getSelectedItem()).getHospitalId());
-        MainDataList.patientList.set(patientTable.getSelectedRow(), p);
+        Doctor d = MainDataList.doctorList.get(doctorTable.getSelectedRow());
+        d.setFirstName(firstNameField.getText());
+        d.setLastName(lastNameField.getText());
+        d.setGender((Person.Gender) genderComboBox.getSelectedItem());
+        d.setEmail(emailField.getText());
+        d.setPhone(phoneField.getText());
+        d.setHospitalId(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId());
+        MainDataList.doctorList.set(doctorTable.getSelectedRow(), d);
         clearButton.doClick();
-        pm.fireTableDataChanged();
+        dm.fireTableDataChanged();
     }//GEN-LAST:event_updateButtonActionPerformed
 
 
@@ -311,10 +306,12 @@ public class PatientCRUD extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JComboBox<Doctor> doctorComboBox;
+    private javax.swing.JTextField doctorIdField;
+    private javax.swing.JTable doctorTable;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JComboBox<Person.Gender> genderComboBox;
+    private javax.swing.JComboBox<Hospital> hospitalComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -326,8 +323,6 @@ public class PatientCRUD extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lastNameField;
-    private javax.swing.JTextField patientIdField;
-    private javax.swing.JTable patientTable;
     private javax.swing.JTextField phoneField;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton viewButton;
