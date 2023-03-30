@@ -6,13 +6,14 @@ package view;
 
 import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import model.Community;
 import model.Person;
 import model.Doctor;
 import model.Hospital;
 import model.Patient;
-import model.table.DoctorModel;
 import model.table.PatientModel;
 
 /**
@@ -104,6 +105,11 @@ public class PatientCRUD extends javax.swing.JPanel {
             }
         ));
         patientTable.getTableHeader().setReorderingAllowed(false);
+        patientTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                patientTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(patientTable);
 
         jLabel7.setText("Doctor:");
@@ -306,6 +312,17 @@ public class PatientCRUD extends javax.swing.JPanel {
         pm.fireTableDataChanged();
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    private void patientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientTableMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            if (patientTable.getSelectedRow() != -1) {
+                Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
+                VitalSignDialog dialog = new VitalSignDialog((JFrame) SwingUtilities.getWindowAncestor(this), true, p.getPatientId(), p.getDoctorId());
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_patientTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

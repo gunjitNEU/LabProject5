@@ -268,7 +268,6 @@ public class CommunityCRUD extends javax.swing.JPanel {
         cm.fireTableDataChanged();
     }//GEN-LAST:event_updateButtonActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextField areaField;

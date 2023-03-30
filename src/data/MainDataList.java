@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import model.Admin;
 import model.Community;
 import model.Doctor;
+import model.Encounter;
 import model.Hospital;
 import model.Patient;
 
@@ -26,5 +27,6 @@ public class MainDataList {
     public static ArrayList<Doctor> doctorList = new ArrayList<>();
     public static ArrayList<Patient> patientList = new ArrayList<>();
     public static ArrayList<Admin> adminList = new ArrayList<>();
+    public static ArrayList<Encounter> encounters = new ArrayList<>();
 
 }

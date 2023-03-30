@@ -15,6 +15,7 @@ public class AdminView extends javax.swing.JPanel {
 
     /**
      * Creates new form AdminView
+     *
      * @param admin
      */
     public AdminView(Admin admin) {
@@ -60,7 +61,6 @@ public class AdminView extends javax.swing.JPanel {
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;
