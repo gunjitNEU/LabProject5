@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class VitalSign {
 
     String weight;
-    String Temperature;
+    String temperature;
     String bloodPressure;
     String pulse;
     LocalDateTime dateTime;
@@ -27,11 +27,11 @@ public class VitalSign {
     }
 
     public String getTemperature() {
-        return Temperature;
+        return temperature;
     }
 
-    public void setTemperature(String Temperature) {
-        this.Temperature = Temperature;
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 
     public String getBloodPressure() {

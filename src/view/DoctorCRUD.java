@@ -250,7 +250,7 @@ public class DoctorCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.hospitalList.remove(doctorTable.getSelectedRow());
+        MainDataList.doctorList.remove(doctorTable.getSelectedRow());
         dm.fireTableDataChanged();
     }//GEN-LAST:event_deleteButtonActionPerformed
 

@@ -5,13 +5,16 @@
 package view;
 
 import data.MainDataList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Community;
 import model.Doctor;
 import model.Hospital;
-import model.Person;
-import model.table.DoctorModel;
+import model.table.DoctorModelFilter;
 
 /**
  *
@@ -22,22 +25,35 @@ public class PatientDirectory extends javax.swing.JPanel {
     /**
      * Creates new form PatientDirectory
      */
-    DoctorModel dm;
+    DoctorModelFilter dm;
 
     public PatientDirectory() {
         initComponents();
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
-        MainDataList.doctorList.add(new Doctor(Doctor.ID++, "aaa", "bbb", Person.Gender.MALE, "abc", "abc", 1001));
-        MainDataList.doctorList.add(new Doctor(Doctor.ID++, "cc", "dd", Person.Gender.MALE, "abc", "abc", 1002));
-        dm = new DoctorModel();
+        dm = new DoctorModelFilter(MainDataList.doctorList);
         doctorTable.setModel(dm);
-        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
+//        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
+        communityComboBox.setSelectedIndex(-1);
         cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
+        cityComboBox.setSelectedIndex(-1);
+//        hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.toArray(new Hospital[0])));
+        hospitalComboBox.setSelectedIndex(-1);
 
-        hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.toArray(new Hospital[0])));
+        cityComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (cityComboBox.getSelectedIndex() != -1) {
+                    communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.stream().filter((c) -> c.getCity() == cityComboBox.getSelectedItem()).toArray(Community[]::new)));
+                    communityComboBox.setSelectedIndex(-1);
+                }
+            }
+        });
+        communityComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (communityComboBox.getSelectedIndex() != -1) {
+                    hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.stream().filter((h) -> h.getCommunityId() == ((Community) communityComboBox.getSelectedItem()).getCommunityId()).toArray(Hospital[]::new)));
+                    hospitalComboBox.setSelectedIndex(-1);
+                }
+            }
+        });
     }
 
     /**
@@ -133,13 +149,12 @@ public class PatientDirectory extends javax.swing.JPanel {
 
         jLabel10.setText("Hospital:");
 
-        communityComboBox.addActionListener(new java.awt.event.ActionListener() {
+        applyButton.setText("Apply");
+        applyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                communityComboBoxActionPerformed(evt);
+                applyButtonActionPerformed(evt);
             }
         });
-
-        applyButton.setText("Apply");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -250,6 +265,11 @@ public class PatientDirectory extends javax.swing.JPanel {
         phoneField.setText("");
         genderField.setText("");
         hospitalField.setText("");
+        cityComboBox.setSelectedIndex(-1);
+        communityComboBox.setSelectedIndex(-1);
+        hospitalComboBox.setSelectedIndex(-1);
+        dm = new DoctorModelFilter(MainDataList.doctorList);
+        doctorTable.setModel(dm);
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
@@ -268,9 +288,17 @@ public class PatientDirectory extends javax.swing.JPanel {
         genderField.setText(d.getGender().toString());
     }//GEN-LAST:event_viewButtonActionPerformed
 
-    private void communityComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_communityComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_communityComboBoxActionPerformed
+    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        if (hospitalComboBox.getSelectedIndex() != -1) {
+            dm = new DoctorModelFilter(MainDataList.doctorList.stream().filter((h) -> h.getHospitalId() == ((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId()).collect(Collectors.toCollection(ArrayList::new)));
+            doctorTable.setModel(dm);
+//            dm.fireTableDataChanged();
+        } else if (communityComboBox.getSelectedIndex() != -1) {
+
+        } else if (communityComboBox.getSelectedIndex() != -1) {
+
+        }
+    }//GEN-LAST:event_applyButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
