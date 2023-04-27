@@ -23,7 +23,6 @@ public class MainDataList {
     }
     private static MainDataList mainDataList = new MainDataList();
 
-    public static ArrayList<Doctor> doctorList = new ArrayList<>();
     public static ArrayList<Patient> patientList = new ArrayList<>();
     public static ArrayList<Admin> adminList = new ArrayList<>();
     public static ArrayList<Encounter> encounters = new ArrayList<>();
