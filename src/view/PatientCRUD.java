@@ -29,10 +29,10 @@ public class PatientCRUD extends javax.swing.JPanel {
 
     public PatientCRUD() {
         initComponents();
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
         MainDataList.doctorList.add(new Doctor(Doctor.ID++, "aaa", "bbb", Person.Gender.MALE, "abc", "abc", 1001));
         MainDataList.doctorList.add(new Doctor(Doctor.ID++, "cc", "dd", Person.Gender.MALE, "abc", "abc", 1002));
 

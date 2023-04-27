@@ -4,6 +4,7 @@
  */
 package view;
 
+import dao.HospitalDao;
 import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -26,14 +27,14 @@ public class DoctorCRUD extends javax.swing.JPanel {
 
     public DoctorCRUD() {
         initComponents();
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
         dm = new DoctorModel();
         doctorTable.setModel(dm);
         genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
-        hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.toArray(new Hospital[0])));
+        hospitalComboBox.setModel(new DefaultComboBoxModel<>(HospitalDao.getAll().toArray(new Hospital[0])));
 
         dm.fireTableDataChanged();
     }
@@ -280,7 +281,7 @@ public class DoctorCRUD extends javax.swing.JPanel {
         emailField.setText(d.getEmail());
         phoneField.setText(d.getPhone());
         doctorIdField.setText(String.valueOf(d.getDoctorId()));
-        Hospital hospital = MainDataList.hospitalList.stream().filter((h) -> h.getHospitalId() == d.getHospitalId()).findAny().get();
+        Hospital hospital = HospitalDao.get(d.getHospitalId());
         hospitalComboBox.setSelectedItem(hospital);
         genderComboBox.setSelectedItem(d.getGender());
         addButton.setEnabled(false);

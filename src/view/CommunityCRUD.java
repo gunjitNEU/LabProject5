@@ -4,6 +4,7 @@
  */
 package view;
 
+import dao.CommunityDao;
 import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -19,17 +20,13 @@ public class CommunityCRUD extends javax.swing.JPanel {
     /**
      * Creates new form CommunityCRUD
      */
-    CommunityModel cm;
-
     public CommunityCRUD() {
         initComponents();
-        cm = new CommunityModel();
-        communityTable.setModel(cm);
+        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
         cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
 
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
     }
 
     /**
@@ -209,8 +206,9 @@ public class CommunityCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.communityList.remove(communityTable.getSelectedRow());
-        cm.fireTableDataChanged();
+        CommunityDao.remove((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
+        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
@@ -232,10 +230,10 @@ public class CommunityCRUD extends javax.swing.JPanel {
         c.setCity((Community.City) cityComboBox.getSelectedItem());
         c.setDistrict(districtField.getText());
         c.setPinCode(pinCodeField.getText());
-        c.setCommunityId(Community.ID++);
-        MainDataList.communityList.add(c);
+        CommunityDao.add(c);
         clearButton.doClick();
-        cm.fireTableDataChanged();
+        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
@@ -245,7 +243,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Community community = MainDataList.communityList.get(communityTable.getSelectedRow());
+        Community community = CommunityDao.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
         cityComboBox.setSelectedItem(community.getCity());
         areaField.setText(community.getArea());
         districtField.setText(community.getDistrict());
@@ -258,14 +256,15 @@ public class CommunityCRUD extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Community c = MainDataList.communityList.get(communityTable.getSelectedRow());
+        Community c = CommunityDao.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
         c.setArea(areaField.getText());
         c.setCity((Community.City) cityComboBox.getSelectedItem());
         c.setDistrict(districtField.getText());
         c.setPinCode(pinCodeField.getText());
-        MainDataList.communityList.set(communityTable.getSelectedRow(), c);
+        CommunityDao.update(c);
         clearButton.doClick();
-        cm.fireTableDataChanged();
+        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
+
     }//GEN-LAST:event_updateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -116,6 +116,9 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="hospitalTableComponentShown"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

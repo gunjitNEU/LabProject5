@@ -28,10 +28,10 @@ public class MainJFrame extends javax.swing.JFrame {
         MainDataList.adminList.add(new Admin("admin@gmail.com", "pass123", Admin.Role.SYSTEM_ADMIN));
         MainDataList.adminList.add(new Admin("comm_admin@gmail.com", "pass123", Admin.Role.COMMUNITY_ADMIN));
         MainDataList.adminList.add(new Admin("hosp_admin@gmail.com", "pass123", Admin.Role.HOSPITAL_ADMIN));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
+//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
+//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
         MainDataList.doctorList.add(new Doctor(Doctor.ID++, "aaa", "bbb", Person.Gender.MALE, "abc", "abc", 1001));
         MainDataList.doctorList.add(new Doctor(Doctor.ID++, "cc", "dd", Person.Gender.MALE, "abc", "abc", 1002));
 
@@ -169,7 +169,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
-        jSplitPane1.setBottomComponent(new PatientDirectory());
+//        jSplitPane1.setBottomComponent(new PatientDirectory());
+        jSplitPane1.setBottomComponent(new HospitalCRUD());
+
 
     }//GEN-LAST:event_patientButtonActionPerformed
 

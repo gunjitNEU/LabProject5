@@ -4,15 +4,19 @@
  */
 package model.table;
 
+import dao.CommunityDao;
 import javax.swing.table.AbstractTableModel;
 import model.Community;
 import data.MainDataList;
+import java.util.ArrayList;
 
 /**
  *
  * @author imkus
  */
 public class CommunityModel extends AbstractTableModel {
+
+    ArrayList<Community> arrayList;
 
     private final String[] columnNames
             = {
@@ -23,13 +27,13 @@ public class CommunityModel extends AbstractTableModel {
                 "Pin Code"
             };
 
-    public CommunityModel() {
-
+    public CommunityModel(ArrayList<Community> arrayList) {
+        this.arrayList = arrayList;
     }
 
     @Override
     public int getRowCount() {
-        return MainDataList.communityList.size();
+        return arrayList.size();
     }
 
     @Override
@@ -49,7 +53,7 @@ public class CommunityModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Community community = MainDataList.communityList.get(rowIndex);
+        Community community = arrayList.get(rowIndex);
         return switch (columnIndex) {
             case 0 ->
                 community.getCommunityId();

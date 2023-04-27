@@ -10,7 +10,6 @@ package model;
  */
 public class Community {
 
-    public static int ID = 1001;
 
     public Community(int communityId, String area, String district, String pinCode, City city) {
         this.communityId = communityId;

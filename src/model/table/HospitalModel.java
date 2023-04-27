@@ -4,10 +4,12 @@
  */
 package model.table;
 
+import dao.CommunityDao;
 import javax.swing.table.AbstractTableModel;
 import model.Community;
 import model.Hospital;
 import data.MainDataList;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,8 +17,15 @@ import data.MainDataList;
  */
 public class HospitalModel extends AbstractTableModel {
 
+    ArrayList<Hospital> arrayList;
+
+    public HospitalModel(ArrayList<Hospital> arrayList) {
+        this.arrayList = arrayList;
+    }
+
     private final String[] columnNames
             = {
+                "Hospital ID",
                 "Name",
                 "Community ID",
                 "Area",
@@ -27,7 +36,7 @@ public class HospitalModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return MainDataList.hospitalList.size();
+        return arrayList.size();
     }
 
     @Override
@@ -47,21 +56,23 @@ public class HospitalModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Hospital hospital = MainDataList.hospitalList.get(rowIndex);
-        Community community = MainDataList.communityList.stream().filter((c) -> c.getCommunityId() == hospital.getCommunityId()).findAny().get();
+        Hospital hospital = arrayList.get(rowIndex);
+        Community community = CommunityDao.get(hospital.getCommunityId());
         return switch (columnIndex) {
-            case 0 ->
-                hospital.getName();
             case 1 ->
-                community.getCommunityId();
+                hospital.getName();
             case 2 ->
-                community.getArea();
+                community.getCommunityId();
             case 3 ->
-                community.getDistrict();
+                community.getArea();
             case 4 ->
-                community.getCity();
+                community.getDistrict();
             case 5 ->
+                community.getCity();
+            case 6 ->
                 community.getPinCode();
+            case 0 ->
+                hospital.getHospitalId();
             default ->
                 null;
         };

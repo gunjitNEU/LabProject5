@@ -4,7 +4,10 @@
  */
 package view;
 
+import dao.CommunityDao;
+import dao.HospitalDao;
 import data.MainDataList;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.table.HospitalModel;
@@ -20,17 +23,15 @@ public class HospitalCRUD extends javax.swing.JPanel {
     /**
      * Creates new form HospitalCRUD
      */
-    HospitalModel hm;
+    ArrayList<Community> communityList;
 
     public HospitalCRUD() {
         initComponents();
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-        hm = new HospitalModel();
-        hospitalTable.setModel(hm);
-        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
-        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-        hm.fireTableDataChanged();
+        communityList = CommunityDao.getAll();
+        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+        communityComboBox.setModel(new DefaultComboBoxModel<>(communityList.toArray(new Community[0]))
+        );
+
     }
 
     /**
@@ -67,6 +68,11 @@ public class HospitalCRUD extends javax.swing.JPanel {
             }
         ));
         hospitalTable.getTableHeader().setReorderingAllowed(false);
+        hospitalTable.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                hospitalTableComponentShown(evt);
+            }
+        });
         jScrollPane1.setViewportView(hospitalTable);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -192,8 +198,9 @@ public class HospitalCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select hospital from list", "No community selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.hospitalList.remove(hospitalTable.getSelectedRow());
-        hm.fireTableDataChanged();
+        HospitalDao.remove((int) hospitalTable.getValueAt(hospitalTable.getSelectedRow(), 0));
+        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
@@ -209,11 +216,11 @@ public class HospitalCRUD extends javax.swing.JPanel {
         // TODO add your handling code here
         Hospital h = new Hospital();
         h.setName(nameField.getText());
-        h.setHospitalId(Hospital.ID++);
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
-        MainDataList.hospitalList.add(h);
+        HospitalDao.add(h);
         clearButton.doClick();
-        hm.fireTableDataChanged();
+        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
@@ -222,10 +229,10 @@ public class HospitalCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select hospital from list", "No hospital selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Hospital hospital = MainDataList.hospitalList.get(hospitalTable.getSelectedRow());
+        Hospital hospital = HospitalDao.get((int) hospitalTable.getValueAt(hospitalTable.getSelectedRow(), 0));
         nameField.setText(hospital.getName());
-        Community community = MainDataList.communityList.stream().filter((c) -> c.getCommunityId() == hospital.getCommunityId()).findAny().get();
-        communityComboBox.setSelectedItem(community);
+
+        communityComboBox.setSelectedItem(communityList.stream().filter(c -> c.getCommunityId() == hospital.getCommunityId()).findAny().get());
         hospitalIdField.setText(String.valueOf(hospital.getHospitalId()));
         addButton.setEnabled(false);
         updateButton.setEnabled(true);
@@ -233,13 +240,19 @@ public class HospitalCRUD extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Hospital h = MainDataList.hospitalList.get(hospitalTable.getSelectedRow());
+        Hospital h = HospitalDao.get((int) hospitalTable.getValueAt(hospitalTable.getSelectedRow(), 0));
         h.setName(nameField.getText());
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
-        MainDataList.hospitalList.set(hospitalTable.getSelectedRow(), h);
+        HospitalDao.update(h);
         clearButton.doClick();
-        hm.fireTableDataChanged();
+        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void hospitalTableComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_hospitalTableComponentShown
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_hospitalTableComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

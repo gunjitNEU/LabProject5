@@ -4,6 +4,8 @@
  */
 package view;
 
+import dao.CommunityDao;
+import dao.HospitalDao;
 import data.MainDataList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +43,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         cityComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (cityComboBox.getSelectedIndex() != -1) {
-                    communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.stream().filter((c) -> c.getCity() == cityComboBox.getSelectedItem()).toArray(Community[]::new)));
+                    communityComboBox.setModel(new DefaultComboBoxModel<>(CommunityDao.getAll().stream().filter((c) -> c.getCity() == cityComboBox.getSelectedItem()).toArray(Community[]::new)));
                     communityComboBox.setSelectedIndex(-1);
                 }
             }
@@ -49,7 +51,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         communityComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (communityComboBox.getSelectedIndex() != -1) {
-                    hospitalComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.hospitalList.stream().filter((h) -> h.getCommunityId() == ((Community) communityComboBox.getSelectedItem()).getCommunityId()).toArray(Hospital[]::new)));
+                    hospitalComboBox.setModel(new DefaultComboBoxModel<>(HospitalDao.getAll().stream().filter((h) -> h.getCommunityId() == ((Community) communityComboBox.getSelectedItem()).getCommunityId()).toArray(Hospital[]::new)));
                     hospitalComboBox.setSelectedIndex(-1);
                 }
             }
@@ -283,7 +285,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         lastNameField.setText(d.getLastName());
         emailField.setText(d.getEmail());
         phoneField.setText(d.getPhone());
-        Hospital hospital = MainDataList.hospitalList.stream().filter((h) -> h.getHospitalId() == d.getHospitalId()).findAny().get();
+        Hospital hospital = HospitalDao.get(d.getHospitalId());
         hospitalField.setText(hospital.getName());
         genderField.setText(d.getGender().toString());
     }//GEN-LAST:event_viewButtonActionPerformed

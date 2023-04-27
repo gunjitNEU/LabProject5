@@ -10,7 +10,6 @@ package model;
  */
 public class Hospital {
 
-    public static int ID = 1001;
 
     int hospitalId;
     String name;

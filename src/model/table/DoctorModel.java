@@ -4,6 +4,7 @@
  */
 package model.table;
 
+import dao.HospitalDao;
 import data.MainDataList;
 import javax.swing.table.AbstractTableModel;
 import model.Doctor;
@@ -52,7 +53,7 @@ public class DoctorModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Doctor doctor = MainDataList.doctorList.get(rowIndex);
-        Hospital hospital = MainDataList.hospitalList.stream().filter((h) -> h.getHospitalId() == doctor.getHospitalId()).findAny().get();
+        Hospital hospital = HospitalDao.get(doctor.getHospitalId());
 
         return switch (columnIndex) {
             case 0 ->
