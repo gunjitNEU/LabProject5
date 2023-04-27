@@ -20,7 +20,8 @@ import model.Hospital;
  * @author imkus
  */
 public class HospitalDao {
-    public static int count() {
+
+    public int count() {
         String query = "select count(*) from hospital";
         Statement stmt;
         ResultSet rs;
@@ -35,7 +36,7 @@ public class HospitalDao {
         return 0;
     }
 
-    public static void remove(int id) {
+    public void remove(int id) {
         String query = "delete from hospital where hospitalId= '" + id + "'";
         Statement stmt;
         try {
@@ -46,7 +47,7 @@ public class HospitalDao {
         }
     }
 
-    public static void add(Hospital h) {
+    public void add(Hospital h) {
         String query = "insert into hospital (name,communityId) values(?,?)";
         PreparedStatement stmt;
         try {
@@ -59,18 +60,22 @@ public class HospitalDao {
         }
     }
 
-    public static void update(Hospital h) {
-        String query = "update hospital set name='" + h.getName() + "', communityId='" + h.getCommunityId() + "' where hospitalId= '" + h.getHospitalId() + "'";
-        Statement stmt;
+    public void update(Hospital h) {
+        String query = "update hospital set name='?', communityId='?' where hospitalId= '?'";
+        PreparedStatement stmt;
         try {
-            stmt = ConnectionManager.getConnection().createStatement();
-            stmt.executeUpdate(query);
+            stmt = ConnectionManager.getConnection().prepareStatement(query);
+            stmt.setString(1, h.getName());
+            stmt.setInt(2, h.getCommunityId());
+            stmt.setInt(3, h.getHospitalId());
+
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static Hospital get(int id) {
+    public Hospital get(int id) {
         String query = "select * from hospital where hospitalId= '" + id + "'";
         Statement stmt;
         ResultSet rs;
@@ -111,5 +116,5 @@ public class HospitalDao {
         }
         return null;
     }
-    
+
 }

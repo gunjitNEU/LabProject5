@@ -10,7 +10,6 @@ package model;
  */
 public class Doctor extends Person {
 
-    public static int ID = 1001;
 
     int doctorId;
     int hospitalId;

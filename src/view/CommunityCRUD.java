@@ -20,13 +20,14 @@ public class CommunityCRUD extends javax.swing.JPanel {
     /**
      * Creates new form CommunityCRUD
      */
+    CommunityDao cd;
+
     public CommunityCRUD() {
         initComponents();
-        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
-        cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
 
-//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
+        cd = new CommunityDao();
+        communityTable.setModel(new CommunityModel(cd.getAll()));
+        cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
     }
 
     /**
@@ -57,6 +58,12 @@ public class CommunityCRUD extends javax.swing.JPanel {
         clearButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         addButton = new javax.swing.JButton();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         communityTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,9 +213,9 @@ public class CommunityCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        CommunityDao.remove((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
-        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
-
+        cd.remove((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
+        communityTable.setModel(new CommunityModel(cd.getAll()));
+        clearButton.doClick();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
@@ -230,9 +237,9 @@ public class CommunityCRUD extends javax.swing.JPanel {
         c.setCity((Community.City) cityComboBox.getSelectedItem());
         c.setDistrict(districtField.getText());
         c.setPinCode(pinCodeField.getText());
-        CommunityDao.add(c);
+        cd.add(c);
         clearButton.doClick();
-        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
+        communityTable.setModel(new CommunityModel(cd.getAll()));
 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -243,7 +250,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select community from list", "No community Slected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Community community = CommunityDao.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
+        Community community = cd.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
         cityComboBox.setSelectedItem(community.getCity());
         areaField.setText(community.getArea());
         districtField.setText(community.getDistrict());
@@ -256,16 +263,21 @@ public class CommunityCRUD extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Community c = CommunityDao.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
+        Community c = cd.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
         c.setArea(areaField.getText());
         c.setCity((Community.City) cityComboBox.getSelectedItem());
         c.setDistrict(districtField.getText());
         c.setPinCode(pinCodeField.getText());
         CommunityDao.update(c);
         clearButton.doClick();
-        communityTable.setModel(new CommunityModel(CommunityDao.getAll()));
+        communityTable.setModel(new CommunityModel(cd.getAll()));
 
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        clearButton.doClick();
+    }//GEN-LAST:event_formComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

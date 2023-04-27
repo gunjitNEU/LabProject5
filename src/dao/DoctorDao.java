@@ -12,15 +12,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Doctor;
 import model.Hospital;
+import model.Person;
 
 /**
  *
  * @author imkus
  */
 public class DoctorDao {
-    public static int count() {
-        String query = "select count(*) from hospital";
+
+    public int count() {
+        String query = "select count(*) from doctor";
         Statement stmt;
         ResultSet rs;
         try {
@@ -34,8 +37,8 @@ public class DoctorDao {
         return 0;
     }
 
-    public static void remove(int id) {
-        String query = "delete from hospital where hospitalId= '" + id + "'";
+    public void remove(int id) {
+        String query = "delete from doctor where doctorId= '" + id + "'";
         Statement stmt;
         try {
             stmt = ConnectionManager.getConnection().createStatement();
@@ -45,43 +48,59 @@ public class DoctorDao {
         }
     }
 
-    public static void add(Hospital h) {
-        String query = "insert into hospital (name,communityId) values(?,?)";
+    public void add(Doctor d) {
+        String query = "insert into doctor (firstName,lastName,gender,email,phone,hospitalId) values(?,?,?,?,?,?)";
         PreparedStatement stmt;
         try {
             stmt = ConnectionManager.getConnection().prepareStatement(query);
-            stmt.setString(1, h.getName());
-            stmt.setInt(2, h.getCommunityId());
+            stmt.setString(1, d.getFirstName());
+            stmt.setString(2, d.getLastName());
+            stmt.setString(3, d.getGender().toString());
+            stmt.setString(4, d.getEmail());
+            stmt.setString(5, d.getPhone());
+            stmt.setInt(6, d.getHospitalId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void update(Hospital h) {
-        String query = "update hospital set name='" + h.getName() + "', communityId='" + h.getCommunityId() + "' where hospitalId= '" + h.getHospitalId() + "'";
-        Statement stmt;
+    public void update(Doctor d) {
+        String query = "update hospital set firstName='?', lastName='?',gender='?',email='?',phone='?',hospitalId='?' where doctorId= '?'";
+        PreparedStatement stmt;
         try {
-            stmt = ConnectionManager.getConnection().createStatement();
+            stmt = ConnectionManager.getConnection().prepareStatement(query);
+            stmt.setString(1, d.getFirstName());
+            stmt.setString(2, d.getLastName());
+            stmt.setString(3, d.getGender().toString());
+            stmt.setString(4, d.getEmail());
+            stmt.setString(5, d.getPhone());
+            stmt.setInt(6, d.getHospitalId());
+            stmt.setInt(7, d.getDoctorId());
+
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static Hospital get(int id) {
-        String query = "select * from hospital where hospitalId= '" + id + "'";
+    public Doctor get(int id) {
+        String query = "select * from doctor where doctorId= '" + id + "'";
         Statement stmt;
         ResultSet rs;
         try {
             stmt = ConnectionManager.getConnection().createStatement();
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                Hospital h = new Hospital();
-                h.setCommunityId(rs.getInt("communityId"));
-                h.setHospitalId(rs.getInt("hospitalId"));
-                h.setName(rs.getString("name"));
-                return h;
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                return d;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,20 +108,24 @@ public class DoctorDao {
         return null;
     }
 
-    public static ArrayList<Hospital> getAll() {
-        String query = "select * from hospital order by hospitalId";
+    public ArrayList<Doctor> getAll() {
+        String query = "select * from doctor order by doctorId";
         Statement stmt;
         ResultSet rs;
         try {
             stmt = ConnectionManager.getConnection().createStatement();
             rs = stmt.executeQuery(query);
-            ArrayList<Hospital> al = new ArrayList<>();
+            ArrayList<Doctor> al = new ArrayList<>();
             while (rs.next()) {
-                Hospital h = new Hospital();
-                h.setCommunityId(rs.getInt("communityId"));
-                h.setHospitalId(rs.getInt("hospitalId"));
-                h.setName(rs.getString("name"));
-                al.add(h);
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                al.add(d);
             }
             return al;
         } catch (SQLException ex) {
@@ -110,5 +133,5 @@ public class DoctorDao {
         }
         return null;
     }
-    
+
 }

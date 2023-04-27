@@ -6,6 +6,7 @@ package model.table;
 
 import dao.HospitalDao;
 import data.MainDataList;
+import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import model.Doctor;
 import model.Hospital;
@@ -15,6 +16,9 @@ import model.Hospital;
  * @author imkus
  */
 public class DoctorModel extends AbstractTableModel {
+
+    ArrayList<Doctor> arrayList;
+    HospitalDao hd;
 
     private final String[] columnNames
             = {
@@ -26,13 +30,14 @@ public class DoctorModel extends AbstractTableModel {
                 "Hospital"
             };
 
-    public DoctorModel() {
-
+    public DoctorModel(ArrayList<Doctor> arrayList) {
+        this.arrayList = arrayList;
+        hd = new HospitalDao();
     }
 
     @Override
     public int getRowCount() {
-        return MainDataList.doctorList.size();
+        return arrayList.size();
     }
 
     @Override
@@ -52,8 +57,8 @@ public class DoctorModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Doctor doctor = MainDataList.doctorList.get(rowIndex);
-        Hospital hospital = HospitalDao.get(doctor.getHospitalId());
+        Doctor doctor = arrayList.get(rowIndex);
+        Hospital hospital = hd.get(doctor.getHospitalId());
 
         return switch (columnIndex) {
             case 0 ->

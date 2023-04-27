@@ -18,7 +18,7 @@ import model.Community;
  */
 public class CommunityDao {
 
-    public static int count() {
+    public int count() {
         String query = "select count(*) from community";
         Statement stmt;
         ResultSet rs;
@@ -33,7 +33,7 @@ public class CommunityDao {
         return 0;
     }
 
-    public static void remove(int id) {
+    public void remove(int id) {
         String query = "delete from community where communityId= '" + id + "'";
         Statement stmt;
         try {
@@ -44,7 +44,7 @@ public class CommunityDao {
         }
     }
 
-    public static void add(Community c) {
+    public void add(Community c) {
         String query = "insert into community (area,district,pinCode,city) values(?,?,?,?)";
         PreparedStatement stmt;
         try {
@@ -60,17 +60,22 @@ public class CommunityDao {
     }
 
     public static void update(Community c) {
-        String query = "update community set city='" + c.getCity().toString() + "', area='" + c.getArea() + "', pinCode='" + c.getPinCode() + "', district='" + c.getDistrict() + "' where communityId= '" + c.getCommunityId() + "'";
-        Statement stmt;
+        String query = "update community set city='?', area='?', pinCode='?', district='?' where communityId= '?'";
+        PreparedStatement stmt;
         try {
-            stmt = ConnectionManager.getConnection().createStatement();
-            stmt.executeUpdate(query);
+            stmt = ConnectionManager.getConnection().prepareStatement(query);
+            stmt.setString(1, c.getCity().toString());
+            stmt.setString(2, c.getArea());
+            stmt.setString(3, c.getPinCode());
+            stmt.setString(4, c.getDistrict());
+            stmt.setInt(5, c.getCommunityId());
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static Community get(int id) {
+    public Community get(int id) {
         String query = "select * from community where communityId= '" + id + "'";
         Statement stmt;
         ResultSet rs;
@@ -92,7 +97,7 @@ public class CommunityDao {
         return null;
     }
 
-    public static ArrayList<Community> getAll() {
+    public ArrayList<Community> getAll() {
         String query = "select * from community order by communityId";
         Statement stmt;
         ResultSet rs;

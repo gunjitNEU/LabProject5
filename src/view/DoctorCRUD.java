@@ -4,8 +4,10 @@
  */
 package view;
 
+import dao.DoctorDao;
 import dao.HospitalDao;
 import data.MainDataList;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Community;
@@ -23,20 +25,20 @@ public class DoctorCRUD extends javax.swing.JPanel {
     /**
      * Creates new form DcotorCRUD
      */
-    DoctorModel dm;
+    DoctorDao dd;
+    HospitalDao hd;
+    ArrayList<Hospital> hospitalList;
 
     public DoctorCRUD() {
         initComponents();
-//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Ottawa));
-//        MainDataList.communityList.add(new Community(Community.ID++, "abc", "abc", "abc", Community.City.Toronto));
-//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "gell", 1001));
-//        MainDataList.hospitalList.add(new Hospital(Hospital.ID++, "well", 1002));
-        dm = new DoctorModel();
-        doctorTable.setModel(dm);
-        genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
-        hospitalComboBox.setModel(new DefaultComboBoxModel<>(HospitalDao.getAll().toArray(new Hospital[0])));
 
-        dm.fireTableDataChanged();
+        dd = new DoctorDao();
+        hd = new HospitalDao();
+        hospitalList = hd.getAll();
+        doctorTable.setModel(new DoctorModel(dd.getAll()));
+        genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
+        hospitalComboBox.setModel(new DefaultComboBoxModel<>(hospitalList.toArray(new Hospital[0])));
+
     }
 
     /**
@@ -71,6 +73,12 @@ public class DoctorCRUD extends javax.swing.JPanel {
         hospitalComboBox = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         doctorIdField = new javax.swing.JTextField();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -239,10 +247,9 @@ public class DoctorCRUD extends javax.swing.JPanel {
         d.setEmail(emailField.getText());
         d.setPhone(phoneField.getText());
         d.setHospitalId(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId());
-        d.setDoctorId(Doctor.ID++);
-        MainDataList.doctorList.add(d);
+        dd.add(d);
         clearButton.doClick();
-        dm.fireTableDataChanged();
+        doctorTable.setModel(new DoctorModel(dd.getAll()));
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -251,8 +258,9 @@ public class DoctorCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.doctorList.remove(doctorTable.getSelectedRow());
-        dm.fireTableDataChanged();
+        dd.remove((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
+        doctorTable.setModel(new DoctorModel(dd.getAll()));
+        clearButton.doClick();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
@@ -275,14 +283,13 @@ public class DoctorCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Doctor d = MainDataList.doctorList.get(doctorTable.getSelectedRow());
+        Doctor d = dd.get((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
         firstNameField.setText(d.getFirstName());
         lastNameField.setText(d.getLastName());
         emailField.setText(d.getEmail());
         phoneField.setText(d.getPhone());
         doctorIdField.setText(String.valueOf(d.getDoctorId()));
-        Hospital hospital = HospitalDao.get(d.getHospitalId());
-        hospitalComboBox.setSelectedItem(hospital);
+        hospitalComboBox.setSelectedItem(hospitalList.stream().filter(h -> h.getHospitalId() == d.getHospitalId()).findAny().get());
         genderComboBox.setSelectedItem(d.getGender());
         addButton.setEnabled(false);
         updateButton.setEnabled(true);
@@ -290,17 +297,26 @@ public class DoctorCRUD extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Doctor d = MainDataList.doctorList.get(doctorTable.getSelectedRow());
+        Doctor d = dd.get((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
         d.setFirstName(firstNameField.getText());
         d.setLastName(lastNameField.getText());
         d.setGender((Person.Gender) genderComboBox.getSelectedItem());
         d.setEmail(emailField.getText());
         d.setPhone(phoneField.getText());
         d.setHospitalId(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId());
-        MainDataList.doctorList.set(doctorTable.getSelectedRow(), d);
+        dd.update(d);
         clearButton.doClick();
-        dm.fireTableDataChanged();
+        doctorTable.setModel(new DoctorModel(dd.getAll()));
+
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        clearButton.doClick();
+        hospitalList = hd.getAll();
+        hospitalComboBox.setModel(new DefaultComboBoxModel<>(hospitalList.toArray(new Hospital[0])));
+
+    }//GEN-LAST:event_formComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

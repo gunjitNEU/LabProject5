@@ -4,6 +4,7 @@
  */
 package view;
 
+import dao.DoctorDao;
 import data.MainDataList;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
@@ -20,10 +21,14 @@ public class DoctorLogin extends javax.swing.JPanel {
      * Creates new form AdminLogin
      */
     JSplitPane jSplitPane;
+    DoctorDao dd;
 
     public DoctorLogin(JSplitPane jSplitPane) {
         initComponents();
+
+        dd = new DoctorDao();
         this.jSplitPane = jSplitPane;
+
     }
 
     /**
@@ -115,14 +120,14 @@ public class DoctorLogin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        Doctor doctor = MainDataList.doctorList
-                .stream()
-                .filter(
-                        (d)
-                        -> ((d.getEmail().equals(emailField.getText()))
-                        && (String.valueOf(d.getDoctorId()).equals(doctorIdField.getText()))))
-                .findAny()
-                .orElse(null);
+        Doctor doctor
+                = dd.getAll().stream()
+                        .filter(
+                                (d)
+                                -> ((d.getEmail().equals(emailField.getText()))
+                                && (String.valueOf(d.getDoctorId()).equals(doctorIdField.getText()))))
+                        .findAny()
+                        .orElse(null);
         if (doctor != null) {
             jSplitPane.setBottomComponent(new PatientCRUD());
         } else {

@@ -18,9 +18,11 @@ import java.util.ArrayList;
 public class HospitalModel extends AbstractTableModel {
 
     ArrayList<Hospital> arrayList;
+    CommunityDao cd;
 
     public HospitalModel(ArrayList<Hospital> arrayList) {
         this.arrayList = arrayList;
+        cd = new CommunityDao();
     }
 
     private final String[] columnNames
@@ -57,7 +59,7 @@ public class HospitalModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Hospital hospital = arrayList.get(rowIndex);
-        Community community = CommunityDao.get(hospital.getCommunityId());
+        Community community = cd.get(hospital.getCommunityId());
         return switch (columnIndex) {
             case 1 ->
                 hospital.getName();

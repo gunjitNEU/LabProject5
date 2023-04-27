@@ -5,6 +5,7 @@
 package view;
 
 import dao.CommunityDao;
+import dao.DoctorDao;
 import dao.HospitalDao;
 import data.MainDataList;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 import model.Community;
 import model.Doctor;
 import model.Hospital;
-import model.table.DoctorModelFilter;
+import model.table.DoctorModel;
 
 /**
  *
@@ -27,11 +28,18 @@ public class PatientDirectory extends javax.swing.JPanel {
     /**
      * Creates new form PatientDirectory
      */
-    DoctorModelFilter dm;
+    DoctorModel dm;
+    DoctorDao dd;
+    CommunityDao cd;
+    HospitalDao hd;
 
     public PatientDirectory() {
         initComponents();
-        dm = new DoctorModelFilter(MainDataList.doctorList);
+        
+        dd = new DoctorDao();
+        cd = new CommunityDao();
+        hd = new HospitalDao();
+        dm = new DoctorModel(dd.getAll());
         doctorTable.setModel(dm);
 //        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
         communityComboBox.setSelectedIndex(-1);
@@ -43,7 +51,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         cityComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (cityComboBox.getSelectedIndex() != -1) {
-                    communityComboBox.setModel(new DefaultComboBoxModel<>(CommunityDao.getAll().stream().filter((c) -> c.getCity() == cityComboBox.getSelectedItem()).toArray(Community[]::new)));
+                    communityComboBox.setModel(new DefaultComboBoxModel<>(cd.getAll().stream().filter((c) -> c.getCity() == cityComboBox.getSelectedItem()).toArray(Community[]::new)));
                     communityComboBox.setSelectedIndex(-1);
                 }
             }
@@ -270,7 +278,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         cityComboBox.setSelectedIndex(-1);
         communityComboBox.setSelectedIndex(-1);
         hospitalComboBox.setSelectedIndex(-1);
-        dm = new DoctorModelFilter(MainDataList.doctorList);
+        dm = new DoctorModel(dd.getAll());
         doctorTable.setModel(dm);
     }//GEN-LAST:event_clearButtonActionPerformed
 
@@ -280,19 +288,19 @@ public class PatientDirectory extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Doctor d = MainDataList.doctorList.get(doctorTable.getSelectedRow());
+        Doctor d = dd.get((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
         firstNameField.setText(d.getFirstName());
         lastNameField.setText(d.getLastName());
         emailField.setText(d.getEmail());
         phoneField.setText(d.getPhone());
-        Hospital hospital = HospitalDao.get(d.getHospitalId());
+        Hospital hospital = hd.get(d.getHospitalId());
         hospitalField.setText(hospital.getName());
         genderField.setText(d.getGender().toString());
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         if (hospitalComboBox.getSelectedIndex() != -1) {
-            dm = new DoctorModelFilter(MainDataList.doctorList.stream().filter((h) -> h.getHospitalId() == ((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId()).collect(Collectors.toCollection(ArrayList::new)));
+            dm = new DoctorModel(dd.getAll().stream().filter((h) -> h.getHospitalId() == ((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId()).collect(Collectors.toCollection(ArrayList::new)));
             doctorTable.setModel(dm);
 //            dm.fireTableDataChanged();
         } else if (communityComboBox.getSelectedIndex() != -1) {
