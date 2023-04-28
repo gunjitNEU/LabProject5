@@ -4,7 +4,7 @@
  */
 package model.table;
 
-import data.MainDataList;
+import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import model.Patient;
 
@@ -14,6 +14,7 @@ import model.Patient;
  */
 public class PatientModel extends AbstractTableModel {
 
+    ArrayList<Patient> arrayList;
     private final String[] columnNames
             = {
                 "Patient ID",
@@ -23,13 +24,13 @@ public class PatientModel extends AbstractTableModel {
                 "Phone"
             };
 
-    public PatientModel() {
-
+    public PatientModel(ArrayList<Patient> arrayList) {
+        this.arrayList = arrayList;
     }
 
     @Override
     public int getRowCount() {
-        return MainDataList.patientList.size();
+        return arrayList.size();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class PatientModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Patient patient = MainDataList.patientList.get(rowIndex);
+        Patient patient = arrayList.get(rowIndex);
 
         return switch (columnIndex) {
             case 0 ->

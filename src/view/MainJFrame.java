@@ -7,10 +7,6 @@ package view;
 import data.MainDataList;
 import javax.swing.JFrame;
 import model.Admin;
-import model.Community;
-import model.Doctor;
-import model.Hospital;
-import model.Person;
 
 /**
  *
@@ -165,7 +161,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
 //        jSplitPane1.setBottomComponent(new PatientDirectory());
-        jSplitPane1.setBottomComponent(new HospitalCRUD());
+        jSplitPane1.setBottomComponent(new PatientCRUD());
 
 
     }//GEN-LAST:event_patientButtonActionPerformed

@@ -6,11 +6,9 @@ package view;
 
 import dao.DoctorDao;
 import dao.HospitalDao;
-import data.MainDataList;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import model.Community;
 import model.Doctor;
 import model.table.DoctorModel;
 import model.Person;

@@ -4,10 +4,8 @@
  */
 package model.table;
 
-import dao.CommunityDao;
 import javax.swing.table.AbstractTableModel;
 import model.Community;
-import data.MainDataList;
 import java.util.ArrayList;
 
 /**

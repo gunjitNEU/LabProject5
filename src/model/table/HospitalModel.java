@@ -8,7 +8,6 @@ import dao.CommunityDao;
 import javax.swing.table.AbstractTableModel;
 import model.Community;
 import model.Hospital;
-import data.MainDataList;
 import java.util.ArrayList;
 
 /**

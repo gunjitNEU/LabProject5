@@ -5,7 +5,6 @@
 package view;
 
 import dao.CommunityDao;
-import data.MainDataList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Community;

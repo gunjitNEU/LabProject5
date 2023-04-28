@@ -5,16 +5,15 @@
 package view;
 
 import dao.DoctorDao;
-import data.MainDataList;
+import dao.PatientDao;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import model.Community;
-import model.Person;
 import model.Doctor;
-import model.Hospital;
 import model.Patient;
+import model.Person;
 import model.table.PatientModel;
 
 /**
@@ -26,20 +25,19 @@ public class PatientCRUD extends javax.swing.JPanel {
     /**
      * Creates new form PatientCRUD
      */
-    PatientModel pm;
     DoctorDao dd;
+    PatientDao pd;
+    ArrayList<Doctor> doctorList;
 
     public PatientCRUD() {
         initComponents();
 
         dd = new DoctorDao();
-        pm = new PatientModel();
-        patientTable.setModel(pm);
+        pd = new PatientDao();
+        doctorList = dd.getAll();
+        patientTable.setModel(new PatientModel(pd.getAll()));
         genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
-        doctorComboBox.setModel(new DefaultComboBoxModel<>(dd.getAll().toArray(new Doctor[0])));
-
-        pm.fireTableDataChanged();
-
+        doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
     }
 
     /**
@@ -74,6 +72,12 @@ public class PatientCRUD extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jLabel5.setText("Email:");
 
@@ -262,9 +266,10 @@ public class PatientCRUD extends javax.swing.JPanel {
         p.setPhone(phoneField.getText());
         p.setDoctorId(((Doctor) doctorComboBox.getSelectedItem()).getDoctorId());
         p.setPatientId(Patient.ID++);
-        MainDataList.patientList.add(p);
+        pd.add(p);
         clearButton.doClick();
-        pm.fireTableDataChanged();
+        patientTable.setModel(new PatientModel(pd.getAll()));
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -273,8 +278,9 @@ public class PatientCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        MainDataList.patientList.remove(patientTable.getSelectedRow());
-        pm.fireTableDataChanged();
+        pd.remove((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
+        patientTable.setModel(new PatientModel(pd.getAll()));
+        clearButton.doClick();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
@@ -283,7 +289,7 @@ public class PatientCRUD extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select patient from list", "No patient selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
+        Patient p = pd.get((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
         firstNameField.setText(p.getFirstName());
         lastNameField.setText(p.getLastName());
         emailField.setText(p.getEmail());
@@ -298,29 +304,38 @@ public class PatientCRUD extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
+        Patient p = pd.get((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
         p.setFirstName(firstNameField.getText());
         p.setLastName(lastNameField.getText());
         p.setGender((Person.Gender) genderComboBox.getSelectedItem());
         p.setEmail(emailField.getText());
         p.setPhone(phoneField.getText());
         p.setDoctorId(((Doctor) doctorComboBox.getSelectedItem()).getHospitalId());
-        MainDataList.patientList.set(patientTable.getSelectedRow(), p);
+        pd.update(p);
         clearButton.doClick();
-        pm.fireTableDataChanged();
+        patientTable.setModel(new PatientModel(pd.getAll()));
+
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void patientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientTableMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             if (patientTable.getSelectedRow() != -1) {
-                Patient p = MainDataList.patientList.get(patientTable.getSelectedRow());
+                Patient p = pd.get((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
                 VitalSignDialog dialog = new VitalSignDialog((JFrame) SwingUtilities.getWindowAncestor(this), true, p.getPatientId(), p.getDoctorId());
                 dialog.setLocationRelativeTo(this);
                 dialog.setVisible(true);
             }
         }
     }//GEN-LAST:event_patientTableMouseClicked
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        clearButton.doClick();
+        doctorList = dd.getAll();
+        doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+
+    }//GEN-LAST:event_formComponentShown
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

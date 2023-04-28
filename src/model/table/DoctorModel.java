@@ -5,7 +5,6 @@
 package model.table;
 
 import dao.HospitalDao;
-import data.MainDataList;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import model.Doctor;

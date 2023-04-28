@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Doctor;
-import model.Hospital;
 import model.Person;
 
 /**
@@ -128,6 +127,32 @@ public class DoctorDao {
                 al.add(d);
             }
             return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Doctor get(String email, String password) {
+        String query = "select * from doctor where email=? and password=?";
+        PreparedStatement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().prepareStatement(query);
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                return d;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }

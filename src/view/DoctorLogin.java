@@ -5,10 +5,8 @@
 package view;
 
 import dao.DoctorDao;
-import data.MainDataList;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
-import model.Admin;
 import model.Doctor;
 
 /**
@@ -46,14 +44,14 @@ public class DoctorLogin extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        doctorIdField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Doctor Login");
 
         jLabel2.setText("Email:");
 
-        jLabel3.setText("Doctor Id:");
+        jLabel3.setText("Password:");
 
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +72,7 @@ public class DoctorLogin extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(doctorIdField))
+                    .addComponent(passwordField))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(200, 200, 200)
@@ -95,7 +93,7 @@ public class DoctorLogin extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(doctorIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(loginButton)
                 .addContainerGap(49, Short.MAX_VALUE))
@@ -121,13 +119,7 @@ public class DoctorLogin extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         Doctor doctor
-                = dd.getAll().stream()
-                        .filter(
-                                (d)
-                                -> ((d.getEmail().equals(emailField.getText()))
-                                && (String.valueOf(d.getDoctorId()).equals(doctorIdField.getText()))))
-                        .findAny()
-                        .orElse(null);
+                = dd.get(emailField.getText(), String.valueOf(passwordField.getPassword()));
         if (doctor != null) {
             jSplitPane.setBottomComponent(new PatientCRUD());
         } else {
@@ -140,12 +132,12 @@ public class DoctorLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField doctorIdField;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginButton;
+    private javax.swing.JPasswordField passwordField;
     // End of variables declaration//GEN-END:variables
 }
