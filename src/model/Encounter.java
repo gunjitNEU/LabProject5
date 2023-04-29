@@ -10,8 +10,6 @@ package model;
  */
 public class Encounter {
 
-    public static int ID = 1001;
-
     int encounterId;
     int doctorId;
     int patientId;

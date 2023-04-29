@@ -322,9 +322,9 @@ public class PatientCRUD extends javax.swing.JPanel {
         if (evt.getClickCount() == 2) {
             if (patientTable.getSelectedRow() != -1) {
                 Patient p = pd.get((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
-                VitalSignDialog dialog = new VitalSignDialog((JFrame) SwingUtilities.getWindowAncestor(this), true, p.getPatientId(), p.getDoctorId());
-                dialog.setLocationRelativeTo(this);
+                VitalSignDialog dialog = new VitalSignDialog(p.getPatientId(), p.getDoctorId());
                 dialog.setVisible(true);
+                dialog.setLocationRelativeTo(this);
             }
         }
     }//GEN-LAST:event_patientTableMouseClicked

@@ -160,8 +160,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
-        jSplitPane1.setBottomComponent(new PatientDirectory());
-//        jSplitPane1.setBottomComponent(new PatientCRUD());
+//        jSplitPane1.setBottomComponent(new DoctorDirectory());
+        jSplitPane1.setBottomComponent(new PatientCRUD());
 
 
     }//GEN-LAST:event_patientButtonActionPerformed

@@ -4,7 +4,8 @@
  */
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -12,27 +13,13 @@ import java.time.LocalDateTime;
  */
 public class VitalSign {
 
-    String weight;
-    String temperature;
+    int weight;
+    int temperature;
     String bloodPressure;
-    String pulse;
-    LocalDateTime dateTime;
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
-    }
+    int pulse;
+    String diagnostic;
+    LocalDate date;
+    LocalTime time;
 
     public String getBloodPressure() {
         return bloodPressure;
@@ -42,20 +29,52 @@ public class VitalSign {
         this.bloodPressure = bloodPressure;
     }
 
-    public String getPulse() {
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public int getPulse() {
         return pulse;
     }
 
-    public void setPulse(String pulse) {
+    public void setPulse(int pulse) {
         this.pulse = pulse;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDiagnostic() {
+        return diagnostic;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDiagnostic(String diagnostic) {
+        this.diagnostic = diagnostic;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
 }
