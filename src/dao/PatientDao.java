@@ -4,7 +4,7 @@
  */
 package dao;
 
-import data.ConnectionManager;
+import connection.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

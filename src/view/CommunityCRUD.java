@@ -267,7 +267,7 @@ public class CommunityCRUD extends javax.swing.JPanel {
         c.setCity((Community.City) cityComboBox.getSelectedItem());
         c.setDistrict(districtField.getText());
         c.setPinCode(pinCodeField.getText());
-        CommunityDao.update(c);
+        cd.update(c);
         clearButton.doClick();
         communityTable.setModel(new CommunityModel(cd.getAll()));
 

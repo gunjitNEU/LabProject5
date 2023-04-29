@@ -32,7 +32,7 @@ public class HospitalCRUD extends javax.swing.JPanel {
         cd = new CommunityDao();
         hd = new HospitalDao();
         communityList = cd.getAll();
-        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+        hospitalTable.setModel(new HospitalModel(hd.getAll()));
         communityComboBox.setModel(new DefaultComboBoxModel<>(communityList.toArray(new Community[0])));
 
     }
@@ -205,7 +205,7 @@ public class HospitalCRUD extends javax.swing.JPanel {
             return;
         }
         hd.remove((int) hospitalTable.getValueAt(hospitalTable.getSelectedRow(), 0));
-        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+        hospitalTable.setModel(new HospitalModel(hd.getAll()));
         clearButton.doClick();
 
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -226,7 +226,7 @@ public class HospitalCRUD extends javax.swing.JPanel {
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
         hd.add(h);
         clearButton.doClick();
-        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+        hospitalTable.setModel(new HospitalModel(hd.getAll()));
 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -252,7 +252,7 @@ public class HospitalCRUD extends javax.swing.JPanel {
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
         hd.update(h);
         clearButton.doClick();
-        hospitalTable.setModel(new HospitalModel(HospitalDao.getAll()));
+        hospitalTable.setModel(new HospitalModel(hd.getAll()));
 
     }//GEN-LAST:event_updateButtonActionPerformed
 

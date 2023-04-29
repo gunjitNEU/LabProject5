@@ -4,7 +4,7 @@
  */
 package dao;
 
-import data.ConnectionManager;
+import connection.ConnectionManager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -58,7 +58,7 @@ public class CommunityDao {
         }
     }
 
-    public static void update(Community c) {
+    public void update(Community c) {
         String query = "update community set city='?', area='?', pinCode='?', district='?' where communityId= '?'";
         PreparedStatement stmt;
         try {
@@ -120,4 +120,27 @@ public class CommunityDao {
         return null;
     }
 
+    public ArrayList<Community> getAllByCity(Community.City city) {
+        String query = "select * from community where city='" + city.toString() + "' order by communityId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Community> al = new ArrayList<>();
+            while (rs.next()) {
+                Community c = new Community();
+                c.setCommunityId(rs.getInt("communityId"));
+                c.setCity(Community.City.valueOf(rs.getString("city")));
+                c.setDistrict(rs.getString("district"));
+                c.setPinCode(rs.getString("pinCode"));
+                c.setArea(rs.getString("area"));
+                al.add(c);
+            }
+            return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

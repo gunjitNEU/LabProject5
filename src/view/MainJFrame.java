@@ -4,9 +4,7 @@
  */
 package view;
 
-import data.MainDataList;
 import javax.swing.JFrame;
-import model.Admin;
 
 /**
  *
@@ -17,15 +15,17 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
+//    AdminDao ad;
     public MainJFrame() {
         initComponents();
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
-
-        MainDataList.adminList.add(new Admin("a", "a", Admin.Role.SYSTEM_ADMIN));
-        MainDataList.adminList.add(new Admin("comm_admin@gmail.com", "pass123", Admin.Role.COMMUNITY_ADMIN));
-        MainDataList.adminList.add(new Admin("hosp_admin@gmail.com", "pass123", Admin.Role.HOSPITAL_ADMIN));
+//        ad = new AdminDao();
+//        Admin a = new Admin();
+//        a.setEmail("hosp_admin@gmail.com");
+//        a.setRole(Admin.Role.HOSPITAL_ADMIN);
+//        ad.add(a);
     }
 
     /**
@@ -160,8 +160,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void patientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientButtonActionPerformed
         // TODO add your handling code here:
-//        jSplitPane1.setBottomComponent(new PatientDirectory());
-        jSplitPane1.setBottomComponent(new PatientCRUD());
+        jSplitPane1.setBottomComponent(new PatientDirectory());
+//        jSplitPane1.setBottomComponent(new PatientCRUD());
 
 
     }//GEN-LAST:event_patientButtonActionPerformed

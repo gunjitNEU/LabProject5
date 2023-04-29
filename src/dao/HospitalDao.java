@@ -4,7 +4,7 @@
  */
 package dao;
 
-import data.ConnectionManager;
+import connection.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,8 +94,30 @@ public class HospitalDao {
         return null;
     }
 
-    public static ArrayList<Hospital> getAll() {
+    public ArrayList<Hospital> getAll() {
         String query = "select * from hospital order by hospitalId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Hospital> al = new ArrayList<>();
+            while (rs.next()) {
+                Hospital h = new Hospital();
+                h.setCommunityId(rs.getInt("communityId"));
+                h.setHospitalId(rs.getInt("hospitalId"));
+                h.setName(rs.getString("name"));
+                al.add(h);
+            }
+            return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Hospital> getAllByCommunity(int communityId) {
+        String query = "select * from hospital where communityId='" + communityId + "' order by hospitalId";
         Statement stmt;
         ResultSet rs;
         try {

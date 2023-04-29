@@ -4,7 +4,7 @@
  */
 package view;
 
-import data.MainDataList;
+import dao.AdminDao;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import model.Admin;
@@ -19,9 +19,11 @@ public class AdminLogin extends javax.swing.JPanel {
      * Creates new form AdminLogin
      */
     JSplitPane jSplitPane;
+    AdminDao ad;
 
     public AdminLogin(JSplitPane jSplitPane) {
         initComponents();
+        ad = new AdminDao();
         this.jSplitPane = jSplitPane;
     }
 
@@ -114,14 +116,7 @@ public class AdminLogin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        Admin admin = MainDataList.adminList
-                .stream()
-                .filter(
-                        (a)
-                        -> ((a.getEmail().equals(emailField.getText())
-                        && (a.getPassword().equals(String.valueOf(passwordField.getPassword()))))))
-                .findAny()
-                .orElse(null);
+        Admin admin = ad.get(emailField.getText(), String.valueOf(passwordField.getPassword()));
         if (admin != null) {
             jSplitPane.setBottomComponent(new AdminView(admin));
         } else {

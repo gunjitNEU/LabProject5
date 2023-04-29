@@ -4,7 +4,7 @@
  */
 package dao;
 
-import data.ConnectionManager;
+import connection.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Community;
 import model.Doctor;
 import model.Person;
 
@@ -153,6 +154,84 @@ public class DoctorDao {
                 d.setDoctorId(rs.getInt("doctorId"));
                 return d;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Doctor> getAllByHospital(int hospitalId) {
+        String query = "select * from doctor where hospitalId='" + hospitalId + "' order by doctorId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Doctor> al = new ArrayList<>();
+            while (rs.next()) {
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                al.add(d);
+            }
+            return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Doctor> getAllByCommunity(int communityId) {
+        String query = "select * from doctor d  join hospital h on d.hospitalId=h.hospitalId where communityId='" + communityId + "' order by doctorId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Doctor> al = new ArrayList<>();
+            while (rs.next()) {
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                al.add(d);
+            }
+            return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Doctor> getAllByCity(Community.City c) {
+        String query = "select * from doctor d  join hospital h on d.hospitalId=h.hospitalId join community c on h.communityId=c.communityId  where city='" + c.toString() + "' order by doctorId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Doctor> al = new ArrayList<>();
+            while (rs.next()) {
+                Doctor d = new Doctor();
+                d.setFirstName(rs.getString("firstName"));
+                d.setLastName(rs.getString("lastName"));
+                d.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                d.setEmail(rs.getString("email"));
+                d.setPhone(rs.getString("phone"));
+                d.setHospitalId(rs.getInt("hospitalId"));
+                d.setDoctorId(rs.getInt("doctorId"));
+                al.add(d);
+            }
+            return al;
         } catch (SQLException ex) {
             Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
         }

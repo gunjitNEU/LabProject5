@@ -7,10 +7,7 @@ package view;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
-import data.MainDataList;
 import java.time.DayOfWeek;
-import javax.swing.JOptionPane;
-import model.Encounter;
 import model.VitalSign;
 
 /**
@@ -160,11 +157,11 @@ public class VitalSignDialog extends javax.swing.JDialog {
         vitalSign.setTemperature(tempField.getText());
         vitalSign.setPulse(pulseField.getText());
         
-        MainDataList.encounters.add(new Encounter(Encounter.ID++, doctorId, patientId, vitalSign));
-        JOptionPane.showMessageDialog(this,
-                "Encounter saved successfully",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE);
+//        MainDataList.encounters.add(new Encounter(Encounter.ID++, doctorId, patientId, vitalSign));
+//        JOptionPane.showMessageDialog(this,
+//                "Encounter saved successfully",
+//                "Success",
+//                JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
         
     }//GEN-LAST:event_saveButtonActionPerformed
