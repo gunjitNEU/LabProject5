@@ -20,7 +20,7 @@ import model.table.DoctorModel;
  *
  * @author imkus
  */
-public class PatientDirectory extends javax.swing.JPanel {
+public class DoctorDirectory extends javax.swing.JPanel {
 
     /**
      * Creates new form PatientDirectory
@@ -30,7 +30,7 @@ public class PatientDirectory extends javax.swing.JPanel {
     CommunityDao cd;
     HospitalDao hd;
 
-    public PatientDirectory() {
+    public DoctorDirectory() {
         initComponents();
 
         dd = new DoctorDao();
@@ -97,7 +97,7 @@ public class PatientDirectory extends javax.swing.JPanel {
         communityComboBox = new javax.swing.JComboBox<>();
         hospitalComboBox = new javax.swing.JComboBox<>();
         applyButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        clearFilterButton = new javax.swing.JButton();
 
         jLabel3.setText("Last Name:");
 
@@ -164,10 +164,10 @@ public class PatientDirectory extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Clear Filter");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        clearFilterButton.setText("Clear Filter");
+        clearFilterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                clearFilterButtonActionPerformed(evt);
             }
         });
 
@@ -184,7 +184,6 @@ public class PatientDirectory extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(viewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
@@ -213,7 +212,7 @@ public class PatientDirectory extends javax.swing.JPanel {
                                     .addComponent(communityComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(hospitalComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(applyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(clearFilterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jLabel1))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
@@ -239,7 +238,7 @@ public class PatientDirectory extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(applyButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(clearFilterButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -283,11 +282,11 @@ public class PatientDirectory extends javax.swing.JPanel {
         phoneField.setText("");
         genderField.setText("");
         hospitalField.setText("");
-        cityComboBox.setSelectedIndex(-1);
-        communityComboBox.setSelectedIndex(-1);
-        hospitalComboBox.setSelectedIndex(-1);
-        dm = new DoctorModel(dd.getAll());
-        doctorTable.setModel(dm);
+//        cityComboBox.setSelectedIndex(-1);
+//        communityComboBox.setSelectedIndex(-1);
+//        hospitalComboBox.setSelectedIndex(-1);
+//        dm = new DoctorModel(dd.getAll());
+//        doctorTable.setModel(dm);
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
@@ -319,20 +318,22 @@ public class PatientDirectory extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_applyButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void clearFilterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFilterButtonActionPerformed
         // TODO add your handling code here:
         cityComboBox.setSelectedIndex(-1);
         communityComboBox.setSelectedIndex(-1);
         hospitalComboBox.setSelectedIndex(-1);
         dm = new DoctorModel(dd.getAll());
         doctorTable.setModel(dm);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        clearButton.doClick();
+    }//GEN-LAST:event_clearFilterButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
     private javax.swing.JComboBox<Community.City> cityComboBox;
     private javax.swing.JButton clearButton;
+    private javax.swing.JButton clearFilterButton;
     private javax.swing.JComboBox<Community> communityComboBox;
     private javax.swing.JTable doctorTable;
     private javax.swing.JTextField emailField;
@@ -340,7 +341,6 @@ public class PatientDirectory extends javax.swing.JPanel {
     private javax.swing.JTextField genderField;
     private javax.swing.JComboBox<Hospital> hospitalComboBox;
     private javax.swing.JTextField hospitalField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

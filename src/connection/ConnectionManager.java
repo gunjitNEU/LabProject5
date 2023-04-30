@@ -12,10 +12,10 @@ import java.sql.*;
  */
 public class ConnectionManager {
 
-    private static String url = "jdbc:mysql://localhost:3306/hospital_management";
-    private static String driverName = "com.mysql.cj.jdbc.Driver";
-    private static String username = "hospital_management";
-    private static String password = "pass123";
+    private static final String url = "jdbc:mysql://localhost:3306/hospital_management";
+    private static final String driverName = "com.mysql.cj.jdbc.Driver";
+    private static final String username = "hospital_management";
+    private static final String password = "pass123";
 
     public static Connection getConnection() {
         try {
