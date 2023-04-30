@@ -6,13 +6,17 @@ package view;
 
 import dao.DoctorDao;
 import dao.HospitalDao;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Doctor;
 import model.table.DoctorModel;
 import model.Person;
 import model.Hospital;
+import utill.Patterns;
+import utill.SimpleDocumentListener;
 
 /**
  *
@@ -36,6 +40,35 @@ public class DoctorCRUD extends javax.swing.JPanel {
         doctorTable.setModel(new DoctorModel(dd.getAll()));
         genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
         hospitalComboBox.setModel(new DefaultComboBoxModel<>(hospitalList.toArray(new Hospital[0])));
+
+        firstNameField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.alpabetPattern, firstNameField.getText())) {
+                firstNameField.setForeground(Color.black);
+            } else {
+                firstNameField.setForeground(Color.red);
+            }
+        });
+        lastNameField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.alpabetPattern, lastNameField.getText())) {
+                lastNameField.setForeground(Color.black);
+            } else {
+                lastNameField.setForeground(Color.red);
+            }
+        });
+        emailField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.emailPattern, emailField.getText())) {
+                emailField.setForeground(Color.black);
+            } else {
+                emailField.setForeground(Color.red);
+            }
+        });
+        phoneField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.phonePattern, phoneField.getText())) {
+                phoneField.setForeground(Color.black);
+            } else {
+                phoneField.setForeground(Color.red);
+            }
+        });
 
     }
 
@@ -237,7 +270,41 @@ public class DoctorCRUD extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        if (firstNameField.getText().isBlank() || lastNameField.getText().isBlank() || emailField.getText().isBlank() || phoneField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "All fields are compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, firstNameField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid First Name",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, lastNameField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Last Name",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.emailPattern, emailField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Email",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.phonePattern, phoneField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Phone",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Doctor d = new Doctor();
         d.setFirstName(firstNameField.getText());
         d.setLastName(lastNameField.getText());
@@ -294,7 +361,41 @@ public class DoctorCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        if (firstNameField.getText().isBlank() || lastNameField.getText().isBlank() || emailField.getText().isBlank() || phoneField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "All fields are compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, firstNameField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid First Name",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, lastNameField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Last Name",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.emailPattern, emailField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Email",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.phonePattern, phoneField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Phone",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Doctor d = dd.get((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
         d.setFirstName(firstNameField.getText());
         d.setLastName(lastNameField.getText());

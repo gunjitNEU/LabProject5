@@ -14,7 +14,9 @@ import javax.swing.JOptionPane;
 import model.Community;
 import model.Doctor;
 import model.Hospital;
+import model.table.DoctorDirectoryModel;
 import model.table.DoctorModel;
+import utill.TableId;
 
 /**
  *
@@ -25,7 +27,7 @@ public class DoctorDirectory extends javax.swing.JPanel {
     /**
      * Creates new form PatientDirectory
      */
-    DoctorModel dm;
+    DoctorDirectoryModel ddm;
     DoctorDao dd;
     CommunityDao cd;
     HospitalDao hd;
@@ -36,8 +38,8 @@ public class DoctorDirectory extends javax.swing.JPanel {
         dd = new DoctorDao();
         cd = new CommunityDao();
         hd = new HospitalDao();
-        dm = new DoctorModel(dd.getAll());
-        doctorTable.setModel(dm);
+        ddm = new DoctorDirectoryModel(dd.getAll());
+        doctorTable.setModel(ddm);
 //        communityComboBox.setModel(new DefaultComboBoxModel<>(MainDataList.communityList.toArray(new Community[0])));
         communityComboBox.setSelectedIndex(-1);
         cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
@@ -295,7 +297,7 @@ public class DoctorDirectory extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select doctor from list", "No doctor selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Doctor d = dd.get((int) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0));
+        Doctor d = dd.get(((TableId) doctorTable.getValueAt(doctorTable.getSelectedRow(), 0)).getId());
         firstNameField.setText(d.getFirstName());
         lastNameField.setText(d.getLastName());
         emailField.setText(d.getEmail());
@@ -307,14 +309,14 @@ public class DoctorDirectory extends javax.swing.JPanel {
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         if (hospitalComboBox.getSelectedIndex() != -1) {
-            dm = new DoctorModel(dd.getAllByHospital(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId()));
-            doctorTable.setModel(dm);
+            ddm = new DoctorDirectoryModel(dd.getAllByHospital(((Hospital) hospitalComboBox.getSelectedItem()).getHospitalId()));
+            doctorTable.setModel(ddm);
         } else if (communityComboBox.getSelectedIndex() != -1) {
-            dm = new DoctorModel(dd.getAllByCommunity(((Community) communityComboBox.getSelectedItem()).getCommunityId()));
-            doctorTable.setModel(dm);
+            ddm = new DoctorDirectoryModel(dd.getAllByCommunity(((Community) communityComboBox.getSelectedItem()).getCommunityId()));
+            doctorTable.setModel(ddm);
         } else if (cityComboBox.getSelectedIndex() != -1) {
-            dm = new DoctorModel(dd.getAllByCity(((Community.City) cityComboBox.getSelectedItem())));
-            doctorTable.setModel(dm);
+            ddm = new DoctorDirectoryModel(dd.getAllByCity(((Community.City) cityComboBox.getSelectedItem())));
+            doctorTable.setModel(ddm);
         }
     }//GEN-LAST:event_applyButtonActionPerformed
 
@@ -323,8 +325,8 @@ public class DoctorDirectory extends javax.swing.JPanel {
         cityComboBox.setSelectedIndex(-1);
         communityComboBox.setSelectedIndex(-1);
         hospitalComboBox.setSelectedIndex(-1);
-        dm = new DoctorModel(dd.getAll());
-        doctorTable.setModel(dm);
+        ddm = new DoctorDirectoryModel(dd.getAll());
+        doctorTable.setModel(ddm);
         clearButton.doClick();
     }//GEN-LAST:event_clearFilterButtonActionPerformed
 

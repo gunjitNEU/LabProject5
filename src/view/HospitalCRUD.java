@@ -220,7 +220,13 @@ public class HospitalCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here
+        if (nameField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Name is compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Hospital h = new Hospital();
         h.setName(nameField.getText());
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());
@@ -246,7 +252,13 @@ public class HospitalCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        if (nameField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Name is compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Hospital h = hd.get((int) hospitalTable.getValueAt(hospitalTable.getSelectedRow(), 0));
         h.setName(nameField.getText());
         h.setCommunityId(((Community) communityComboBox.getSelectedItem()).getCommunityId());

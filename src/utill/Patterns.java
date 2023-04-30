@@ -11,7 +11,9 @@ package utill;
 public class Patterns {
 
     public static String numberPattern = "^\\d*$";
-    public static String emailPattern = "";
-    public static String phonePattern = "";
+    public static String alpabetPattern = "^[A-Za-z]*$";
+
+    public static String emailPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    public static String phonePattern = "^\\d{10}$";
 
 }

@@ -67,28 +67,28 @@ public class VitalSignDialog extends javax.swing.JFrame {
             }
         });
         sysPressureField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
-            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+            if (Pattern.matches(Patterns.numberPattern, sysPressureField.getText())) {
                 sysPressureField.setForeground(Color.black);
             } else {
                 sysPressureField.setForeground(Color.red);
             }
         });
         diaPressureField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
-            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+            if (Pattern.matches(Patterns.numberPattern, diaPressureField.getText())) {
                 diaPressureField.setForeground(Color.black);
             } else {
                 diaPressureField.setForeground(Color.red);
             }
         });
         pulseField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
-            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+            if (Pattern.matches(Patterns.numberPattern, pulseField.getText())) {
                 pulseField.setForeground(Color.black);
             } else {
                 pulseField.setForeground(Color.red);
             }
         });
         weightField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
-            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+            if (Pattern.matches(Patterns.numberPattern, weightField.getText())) {
                 weightField.setForeground(Color.black);
             } else {
                 weightField.setForeground(Color.red);

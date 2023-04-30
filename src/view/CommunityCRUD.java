@@ -5,10 +5,14 @@
 package view;
 
 import dao.CommunityDao;
+import java.awt.Color;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Community;
 import model.table.CommunityModel;
+import utill.Patterns;
+import utill.SimpleDocumentListener;
 
 /**
  *
@@ -27,6 +31,20 @@ public class CommunityCRUD extends javax.swing.JPanel {
         cd = new CommunityDao();
         communityTable.setModel(new CommunityModel(cd.getAll()));
         cityComboBox.setModel(new DefaultComboBoxModel<>(Community.City.values()));
+        pinCodeField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (pinCodeField.getText().length() < 6 || pinCodeField.getText().length() > 6) {
+                pinCodeField.setForeground(Color.red);
+            } else {
+                pinCodeField.setForeground(Color.black);
+            }
+        });
+        districtField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.alpabetPattern, districtField.getText())) {
+                districtField.setForeground(Color.black);
+            } else {
+                districtField.setForeground(Color.red);
+            }
+        });
     }
 
     /**
@@ -230,7 +248,27 @@ public class CommunityCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        if (areaField.getText().isBlank() || districtField.getText().isBlank() || pinCodeField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "All fields are compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (pinCodeField.getText().length() < 6 || pinCodeField.getText().length() > 6) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Pin Code",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, districtField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid District",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Community c = new Community();
         c.setArea(areaField.getText());
         c.setCity((Community.City) cityComboBox.getSelectedItem());
@@ -261,7 +299,27 @@ public class CommunityCRUD extends javax.swing.JPanel {
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        if (areaField.getText().isBlank() || districtField.getText().isBlank() || pinCodeField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "All fields are compulsory",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (pinCodeField.getText().length() < 6 || pinCodeField.getText().length() > 6) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid Pin Code",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.alpabetPattern, districtField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid District",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Community c = cd.get((int) communityTable.getValueAt(communityTable.getSelectedRow(), 0));
         c.setArea(areaField.getText());
         c.setCity((Community.City) cityComboBox.getSelectedItem());
