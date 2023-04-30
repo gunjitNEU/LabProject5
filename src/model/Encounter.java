@@ -18,8 +18,8 @@ public class Encounter {
     public Encounter() {
     }
 
-    public Encounter(int encounterId, int doctorId, int patientId, VitalSign vitalSign) {
-        this.encounterId = encounterId;
+    public Encounter(int doctorId, int patientId, VitalSign vitalSign) {
+
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.vitalSign = vitalSign;

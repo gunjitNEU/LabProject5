@@ -7,10 +7,18 @@ package view;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 import com.github.lgooddatepicker.components.TimePickerSettings.TimeIncrement;
+import dao.EncounterDao;
+import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.temporal.ChronoField;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import model.Encounter;
 import model.VitalSign;
+import model.table.EncounterModel;
+import utill.Patterns;
+import utill.SimpleDocumentListener;
 
 /**
  *
@@ -23,17 +31,14 @@ public class VitalSignDialog extends javax.swing.JFrame {
      */
     int patientId;
     int doctorId;
+    EncounterDao ed;
 
-//    public VitalSignDialog(java.awt.Frame parent, boolean modal) {
-//        super(parent, modal);
-//        
-//        initComponents();
-//    }
     public VitalSignDialog(int patientId, int doctorId) {
         initComponents();
         this.patientId = patientId;
         this.doctorId = doctorId;
-
+        ed = new EncounterDao();
+        encounterTable.setModel(new EncounterModel(ed.getAllByPatientAndDoctor(doctorId, patientId)));
         DatePickerSettings dateSettings = datePicker.getSettings();
         dateSettings.setAllowKeyboardEditing(false);
         dateSettings.setAllowEmptyDates(false);
@@ -53,6 +58,43 @@ public class VitalSignDialog extends javax.swing.JFrame {
 
         datePicker.setDateToToday();
 //        dateTimePicker.timePicker.setTimeToNow();
+
+        tempField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+                tempField.setForeground(Color.black);
+            } else {
+                tempField.setForeground(Color.red);
+            }
+        });
+        sysPressureField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+                sysPressureField.setForeground(Color.black);
+            } else {
+                sysPressureField.setForeground(Color.red);
+            }
+        });
+        diaPressureField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+                diaPressureField.setForeground(Color.black);
+            } else {
+                diaPressureField.setForeground(Color.red);
+            }
+        });
+        pulseField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+                pulseField.setForeground(Color.black);
+            } else {
+                pulseField.setForeground(Color.red);
+            }
+        });
+        weightField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+                weightField.setForeground(Color.black);
+            } else {
+                weightField.setForeground(Color.red);
+            }
+        });
+
     }
 
     @SuppressWarnings("unchecked")
@@ -67,7 +109,7 @@ public class VitalSignDialog extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         weightField = new javax.swing.JTextField();
         pulseField = new javax.swing.JTextField();
-        pressureField = new javax.swing.JTextField();
+        sysPressureField = new javax.swing.JTextField();
         tempField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -76,6 +118,11 @@ public class VitalSignDialog extends javax.swing.JFrame {
         datePicker = new com.github.lgooddatepicker.components.DatePicker();
         timePicker = new com.github.lgooddatepicker.components.TimePicker();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        diaPressureField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        diagnosticField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -96,8 +143,8 @@ public class VitalSignDialog extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Add Vitals");
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Add Vitals");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("Encounters");
@@ -115,6 +162,12 @@ public class VitalSignDialog extends javax.swing.JFrame {
 
         jLabel8.setText("Time:");
 
+        jLabel9.setText("Sys:");
+
+        jLabel10.setText("Dia:");
+
+        jLabel11.setText("Diagnostic");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,23 +178,32 @@ public class VitalSignDialog extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel11))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sysPressureField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(diaPressureField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6)
                             .addComponent(weightField)
                             .addComponent(datePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tempField)
-                            .addComponent(pressureField)
                             .addComponent(pulseField)
                             .addComponent(timePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(diagnosticField))
                         .addGap(0, 20, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -164,7 +226,10 @@ public class VitalSignDialog extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(pressureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sysPressureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(diaPressureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -182,6 +247,10 @@ public class VitalSignDialog extends javax.swing.JFrame {
                             .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(diagnosticField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(saveButton)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -192,18 +261,92 @@ public class VitalSignDialog extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-        VitalSign vitalSign = new VitalSign();
-        vitalSign.setBloodPressure(pressureField.getText());
-//        vitalSign.setDateTime();
-//        vitalSign.setWeight(weightField.getText());
-//        vitalSign.setTemperature(tempField.getText());
-//        vitalSign.setPulse(pulseField.getText());
+        if (tempField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Temperature field not alllowed empty",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (sysPressureField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Sys field not alllowed empty",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (diaPressureField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Dia field not alllowed empty",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (pulseField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Pulse field not alllowed empty",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (weightField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "Weight field not alllowed empty",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.numberPattern, tempField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Temperature field can be numbers only",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.numberPattern, sysPressureField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Sys field can be numbers only",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.numberPattern, diaPressureField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Dia field can be numbers only",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.numberPattern, pulseField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Pulse field can be numbers only",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!Pattern.matches(Patterns.numberPattern, weightField.getText())) {
+            JOptionPane.showMessageDialog(this,
+                    "Weight field can be numbers only",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-//        MainDataList.encounters.add(new Encounter(Encounter.ID++, doctorId, patientId, vitalSign));
-//        JOptionPane.showMessageDialog(this,
-//                "Encounter saved successfully",
-//                "Success",
-//                JOptionPane.INFORMATION_MESSAGE);
+        VitalSign vitalSign = new VitalSign();
+        vitalSign.setBloodPressure(sysPressureField.getText() + "\\" + diaPressureField.getText());
+        vitalSign.setDate(datePicker.getDate());
+        vitalSign.setTime(timePicker.getTime());
+        vitalSign.setPulse(Integer.parseInt(pulseField.getText()));
+        vitalSign.setDiagnostic(diagnosticField.getText());
+
+        vitalSign.setWeight(Integer.parseInt(weightField.getText()));
+        vitalSign.setTemperature(Integer.parseInt(tempField.getText()));
+
+        ed.add(new Encounter(doctorId, patientId, vitalSign));
+        JOptionPane.showMessageDialog(this,
+                "Encounter saved successfully",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
 
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -211,8 +354,12 @@ public class VitalSignDialog extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker;
+    private javax.swing.JTextField diaPressureField;
+    private javax.swing.JTextField diagnosticField;
     private javax.swing.JTable encounterTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -220,10 +367,11 @@ public class VitalSignDialog extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField pressureField;
     private javax.swing.JTextField pulseField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JTextField sysPressureField;
     private javax.swing.JTextField tempField;
     private com.github.lgooddatepicker.components.TimePicker timePicker;
     private javax.swing.JTextField weightField;
