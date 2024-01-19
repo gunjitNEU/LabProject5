@@ -59,7 +59,7 @@ public class CommunityDao {
     }
 
     public void update(Community c) {
-        String query = "update community set city='?', area='?', pinCode='?', district='?' where communityId= '?'";
+        String query = "update community set city= ? , area= ? , pinCode= ? , district= ?  where communityId= ?";
         PreparedStatement stmt;
         try {
             stmt = ConnectionManager.getConnection().prepareStatement(query);

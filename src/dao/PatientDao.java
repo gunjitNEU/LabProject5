@@ -66,7 +66,7 @@ public class PatientDao {
     }
 
     public void update(Patient p) {
-        String query = "update patient set firstName='?', lastName='?',gender='?',email='?',phone='?',doctorId='?' where patientId= '?'";
+        String query = "update patient set firstName= ? , lastName= ? ,gender= ? ,email= ? ,phone= ? ,doctorId= ?  where patientId= ?";
         PreparedStatement stmt;
         try {
             stmt = ConnectionManager.getConnection().prepareStatement(query);
@@ -110,6 +110,32 @@ public class PatientDao {
 
     public ArrayList<Patient> getAll() {
         String query = "select * from patient order by patientId";
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = ConnectionManager.getConnection().createStatement();
+            rs = stmt.executeQuery(query);
+            ArrayList<Patient> al = new ArrayList<>();
+            while (rs.next()) {
+                Patient p = new Patient();
+                p.setFirstName(rs.getString("firstName"));
+                p.setLastName(rs.getString("lastName"));
+                p.setGender(Person.Gender.valueOf(rs.getString("gender")));
+                p.setEmail(rs.getString("email"));
+                p.setPhone(rs.getString("phone"));
+                p.setDoctorId(rs.getInt("doctorId"));
+                p.setPatientId(rs.getInt("patientId"));
+                al.add(p);
+            }
+            return al;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommunityDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<Patient> getAllByDoctor(int doctorId) {
+        String query = "select * from patient where doctorId='" + doctorId + "' order by patientId";
         Statement stmt;
         ResultSet rs;
         try {

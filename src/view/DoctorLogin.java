@@ -5,9 +5,13 @@
 package view;
 
 import dao.DoctorDao;
+import java.awt.Color;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import model.Doctor;
+import utill.Patterns;
+import utill.SimpleDocumentListener;
 
 /**
  *
@@ -26,7 +30,13 @@ public class DoctorLogin extends javax.swing.JPanel {
 
         dd = new DoctorDao();
         this.jSplitPane = jSplitPane;
-
+        emailField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.emailPattern, emailField.getText())) {
+                emailField.setForeground(Color.black);
+            } else {
+                emailField.setForeground(Color.red);
+            }
+        });
     }
 
     /**
@@ -48,7 +58,7 @@ public class DoctorLogin extends javax.swing.JPanel {
         clearButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Admin Login");
+        jLabel1.setText("Doctor Login");
 
         jLabel2.setText("Email:");
 
@@ -136,7 +146,7 @@ public class DoctorLogin extends javax.swing.JPanel {
         Doctor doctor
                 = dd.get(emailField.getText(), String.valueOf(passwordField.getPassword()));
         if (doctor != null) {
-            jSplitPane.setBottomComponent(new PatientCRUD());
+            jSplitPane.setBottomComponent(new PatientCRUD(doctor.getDoctorId()));
         } else {
             JOptionPane.showMessageDialog(this,
                     "Invalid Email or Password",

@@ -66,7 +66,7 @@ public class DoctorDao {
     }
 
     public void update(Doctor d) {
-        String query = "update hospital set firstName='?', lastName='?',gender='?',email='?',phone='?',hospitalId='?' where doctorId= '?'";
+        String query = "update doctor set firstName= ? , lastName= ? , gender= ? , email= ? , phone= ? , hospitalId= ?  where doctorId= ?";
         PreparedStatement stmt;
         try {
             stmt = ConnectionManager.getConnection().prepareStatement(query);

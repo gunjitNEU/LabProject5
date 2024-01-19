@@ -60,7 +60,7 @@ public class HospitalDao {
     }
 
     public void update(Hospital h) {
-        String query = "update hospital set name='?', communityId='?' where hospitalId= '?'";
+        String query = "update hospital set name= ? , communityId= ?  where hospitalId= ?";
         PreparedStatement stmt;
         try {
             stmt = ConnectionManager.getConnection().prepareStatement(query);

@@ -30,16 +30,28 @@ public class PatientCRUD extends javax.swing.JPanel {
     DoctorDao dd;
     PatientDao pd;
     ArrayList<Doctor> doctorList;
+    int doctorId;
 
-    public PatientCRUD() {
+    public PatientCRUD(int doctorId) {
         initComponents();
 
         dd = new DoctorDao();
         pd = new PatientDao();
-        doctorList = dd.getAll();
-        patientTable.setModel(new PatientModel(pd.getAll()));
+        this.doctorId = doctorId;
         genderComboBox.setModel(new DefaultComboBoxModel<>(Person.Gender.values()));
-        doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+        if (doctorId == 0) {
+            doctorList = dd.getAll();
+            doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+            patientTable.setModel(new PatientModel(pd.getAll()));
+        } else {
+            doctorList = new ArrayList<Doctor>() {
+                {
+                    add(dd.get(doctorId));
+                }
+            };
+            doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+            patientTable.setModel(new PatientModel(pd.getAllByDoctor(doctorId)));
+        }
 
         firstNameField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
             if (Pattern.matches(Patterns.alpabetPattern, firstNameField.getText())) {
@@ -335,7 +347,12 @@ public class PatientCRUD extends javax.swing.JPanel {
         p.setPatientId(Patient.ID++);
         pd.add(p);
         clearButton.doClick();
-        patientTable.setModel(new PatientModel(pd.getAll()));
+        if (doctorId == 0) {
+            patientTable.setModel(new PatientModel(pd.getAll()));
+        } else {
+            patientTable.setModel(new PatientModel(pd.getAllByDoctor(doctorId)));
+        }
+
 
     }//GEN-LAST:event_addButtonActionPerformed
 
@@ -346,7 +363,11 @@ public class PatientCRUD extends javax.swing.JPanel {
             return;
         }
         pd.remove((int) patientTable.getValueAt(patientTable.getSelectedRow(), 0));
-        patientTable.setModel(new PatientModel(pd.getAll()));
+        if (doctorId == 0) {
+            patientTable.setModel(new PatientModel(pd.getAll()));
+        } else {
+            patientTable.setModel(new PatientModel(pd.getAllByDoctor(doctorId)));
+        }
         clearButton.doClick();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -415,8 +436,11 @@ public class PatientCRUD extends javax.swing.JPanel {
         p.setDoctorId(((Doctor) doctorComboBox.getSelectedItem()).getHospitalId());
         pd.update(p);
         clearButton.doClick();
-        patientTable.setModel(new PatientModel(pd.getAll()));
-
+        if (doctorId == 0) {
+            patientTable.setModel(new PatientModel(pd.getAll()));
+        } else {
+            patientTable.setModel(new PatientModel(pd.getAllByDoctor(doctorId)));
+        }
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void patientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_patientTableMouseClicked
@@ -433,9 +457,18 @@ public class PatientCRUD extends javax.swing.JPanel {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        if (doctorId == 0) {
+            doctorList = dd.getAll();
+            doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+        } else {
+            doctorList = new ArrayList<Doctor>() {
+                {
+                    add(dd.get(doctorId));
+                }
+            };
+            doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
+        }
         clearButton.doClick();
-        doctorList = dd.getAll();
-        doctorComboBox.setModel(new DefaultComboBoxModel<>(doctorList.toArray(new Doctor[0])));
 
     }//GEN-LAST:event_formComponentShown
 

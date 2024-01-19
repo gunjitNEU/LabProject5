@@ -23,7 +23,7 @@ public class AdminView extends javax.swing.JPanel {
 
         switch (admin.getRole()) {
             case SYSTEM_ADMIN -> {
-                jTabbedPane1.add("Patient", new PatientCRUD());
+                jTabbedPane1.add("Patient", new PatientCRUD(0));
                 jTabbedPane1.add("Doctor", new DoctorCRUD());
                 jTabbedPane1.add("Hospital", new HospitalCRUD());
                 jTabbedPane1.add("Community", new CommunityCRUD());
@@ -31,9 +31,11 @@ public class AdminView extends javax.swing.JPanel {
             case COMMUNITY_ADMIN ->
                 jTabbedPane1.add("Community", new CommunityCRUD());
             case HOSPITAL_ADMIN -> {
-                jTabbedPane1.add("Patient", new PatientCRUD());
+//                jTabbedPane1.add("Patient", new PatientCRUD());
                 jTabbedPane1.add("Doctor", new DoctorCRUD());
-                jTabbedPane1.add("Patient", new PatientCRUD());
+//                jTabbedPane1.add("Patient", new PatientCRUD());
+                jTabbedPane1.add("Hospital", new HospitalCRUD());
+
             }
         }
 

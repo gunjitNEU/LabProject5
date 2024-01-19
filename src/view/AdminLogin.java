@@ -5,9 +5,13 @@
 package view;
 
 import dao.AdminDao;
+import java.awt.Color;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import model.Admin;
+import utill.Patterns;
+import utill.SimpleDocumentListener;
 
 /**
  *
@@ -25,6 +29,13 @@ public class AdminLogin extends javax.swing.JPanel {
         initComponents();
         ad = new AdminDao();
         this.jSplitPane = jSplitPane;
+        emailField.getDocument().addDocumentListener((SimpleDocumentListener) e -> {
+            if (Pattern.matches(Patterns.emailPattern, emailField.getText())) {
+                emailField.setForeground(Color.black);
+            } else {
+                emailField.setForeground(Color.red);
+            }
+        });
     }
 
     /**
@@ -46,7 +57,7 @@ public class AdminLogin extends javax.swing.JPanel {
         clearButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Doctor Login");
+        jLabel1.setText("Admin Login");
 
         jLabel2.setText("Email:");
 
